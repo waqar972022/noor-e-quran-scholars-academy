@@ -1,0 +1,231 @@
+/* ============================================================
+   QALAM ACADEMY — Global Theme
+   resources/css/qalam-theme.css
+   Import this in app.css:  @import './qalam-theme.css';
+   ============================================================ */
+
+/* ── Google Fonts ─────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap');
+
+/* ── CSS Custom Properties ────────────────────────────────── */
+:root {
+    /* Parchment palette */
+    --q-parch:         #F5F0E4;   /* page background */
+    --q-parch-2:       #EDE6D4;   /* card / surface */
+    --q-parch-3:       #E2D9C4;   /* input background / tab strip */
+    --q-parch-4:       #D5CDB5;   /* hover tints */
+
+    /* Ink / text */
+    --q-ink:           #1C1408;   /* primary text */
+    --q-ink-2:         #3D2E14;   /* secondary text */
+    --q-muted:         #7A6848;   /* placeholder / meta */
+
+    /* Brand colours */
+    --q-green:         #1B4332;   /* primary action */
+    --q-green-hover:   #2D6A4F;   /* button hover */
+    --q-green-light:   #D4E8C4;   /* light tint (badges, thumbs) */
+    --q-gold:          #9A6B1F;   /* accent labels */
+    --q-gold-2:        #C8960C;   /* ornament / divider glow */
+
+    /* Borders */
+    --q-border:        rgba(154, 107, 31, 0.18);
+    --q-border-focus:  #1B4332;
+
+    /* Radius */
+    --q-radius:        8px;
+    --q-radius-lg:     14px;
+    --q-radius-xl:     20px;
+
+    /* Shadows */
+    --q-shadow-card:   0 4px 24px rgba(28, 20, 8, 0.07);
+    --q-shadow-panel:  0 8px 40px rgba(28, 20, 8, 0.10);
+
+    /* Typography */
+    --q-font-sans:     'Inter', system-ui, -apple-system, sans-serif;
+    --q-font-serif:    'Amiri', Georgia, serif;
+    --q-font-prose:    'Lora', Georgia, serif;
+}
+
+/* ── Reset helpers ────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Base ─────────────────────────────────────────────────── */
+html { scroll-behavior: smooth; }
+
+body {
+    font-family:      var(--q-font-sans);
+    background-color: var(--q-parch);
+    color:            var(--q-ink);
+    line-height:      1.6;
+    min-height:       100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+
+/* ── Utility: screen-reader only ─────────────────────────── */
+.q-sr-only {
+    position: absolute; width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden;
+    clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+/* ── Typography helpers ───────────────────────────────────── */
+.q-font-serif   { font-family: var(--q-font-serif); }
+.q-font-prose   { font-family: var(--q-font-prose); }
+.q-text-gold    { color: var(--q-gold); }
+.q-text-green   { color: var(--q-green); }
+.q-text-muted   { color: var(--q-muted); }
+.q-text-ink     { color: var(--q-ink); }
+
+.q-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--q-gold);
+}
+
+.q-section-title {
+    font-family: var(--q-font-serif);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--q-ink);
+    line-height: 1.3;
+}
+
+/* ── Buttons ──────────────────────────────────────────────── */
+.q-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 22px;
+    border-radius: var(--q-radius);
+    font-family: var(--q-font-sans);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+}
+
+.q-btn-primary {
+    background: var(--q-green);
+    color: var(--q-parch);
+}
+.q-btn-primary:hover { background: var(--q-green-hover); }
+
+.q-btn-outline {
+    background: transparent;
+    border: 1.5px solid var(--q-green);
+    color: var(--q-green);
+}
+.q-btn-outline:hover { background: var(--q-green); color: var(--q-parch); }
+
+.q-btn-ghost {
+    background: transparent;
+    border: 1.5px solid var(--q-border);
+    color: var(--q-ink-2);
+}
+.q-btn-ghost:hover { background: var(--q-parch-3); }
+
+.q-btn-full { width: 100%; }
+.q-btn-sm   { padding: 7px 14px; font-size: 12px; }
+.q-btn-lg   { padding: 13px 28px; font-size: 15px; }
+
+/* ── Form elements ────────────────────────────────────────── */
+.q-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: var(--q-muted);
+    margin-bottom: 5px;
+}
+
+.q-input {
+    width: 100%;
+    background: var(--q-parch);
+    border: 1.5px solid var(--q-border);
+    border-radius: var(--q-radius);
+    padding: 10px 14px;
+    color: var(--q-ink);
+    font-family: var(--q-font-sans);
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.q-input:focus        { border-color: var(--q-border-focus); }
+.q-input::placeholder { color: rgba(122,104,72,.4); }
+.q-input.is-invalid   { border-color: #b91c1c; }
+
+.q-form-group { margin-bottom: 1rem; }
+
+.q-error {
+    font-size: 12px;
+    color: #b91c1c;
+    margin-top: 4px;
+}
+
+/* ── Cards ────────────────────────────────────────────────── */
+.q-card {
+    background:    var(--q-parch-2);
+    border:        1.5px solid var(--q-border);
+    border-radius: var(--q-radius-lg);
+    padding:       1.25rem;
+    box-shadow:    var(--q-shadow-card);
+}
+
+/* ── Badges ───────────────────────────────────────────────── */
+.q-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+}
+.q-badge-green  { background: rgba(27,67,50,.10); color: var(--q-green); }
+.q-badge-gold   { background: rgba(154,107,31,.12); color: var(--q-gold); }
+.q-badge-free   { background: var(--q-green-light); color: var(--q-green); }
+
+/* ── Alerts ───────────────────────────────────────────────── */
+.q-alert {
+    padding: .85rem 1rem;
+    border-radius: var(--q-radius);
+    font-size: 14px;
+    margin-bottom: 1rem;
+}
+.q-alert-error   { background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; }
+.q-alert-success { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; }
+.q-alert-info    { background: rgba(27,67,50,.06); border: 1px solid var(--q-border); color: var(--q-ink-2); }
+
+/* ── Ornament divider ─────────────────────────────────────── */
+.q-ornament {
+    text-align: center;
+    font-family: var(--q-font-serif);
+    color: var(--q-gold);
+    letter-spacing: .6em;
+    opacity: .45;
+    padding: .75rem 0;
+    user-select: none;
+}
+
+/* ── Section spacing ──────────────────────────────────────── */
+.q-section { padding: 3rem 1.5rem; }
+.q-section-alt { background: var(--q-parch-2); }
+
+/* ── RTL support for Urdu content blocks ─────────────────── */
+[dir="rtl"] .q-content-block,
+.urdu-text {
+    direction: rtl;
+    text-align: right;
+    font-family: var(--q-font-serif);
+    line-height: 2;
+}
+
+/* ── PKR currency display helper (used via @php or Blade) ─── */
+/* Applied via .q-price class */
+.q-price::before { content: 'PKR '; font-size: .85em; opacity: .7; }

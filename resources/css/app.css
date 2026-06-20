@@ -1,0 +1,332 @@
+@import 'tailwindcss';
+@import './qalam-theme.css';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+@layer base {
+    :root {
+        --background: #f4efe8;
+        --panel: #fffdf8;
+        --text: #1f2937;
+        --muted: #6b7280;
+        --brand: #0f766e;
+        --brand-strong: #115e59;
+        --border: rgba(15, 23, 42, 0.1);
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        margin: 0;
+        font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: radial-gradient(circle at top, rgba(15, 118, 110, 0.12), transparent 35%),
+            linear-gradient(180deg, #ffffff 0%, #f8f4ee 100%);
+        color: var(--text);
+    }
+
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+        font: inherit;
+    }
+
+    .page-shell {
+        width: min(1120px, calc(100% - 2rem));
+        margin: 0 auto;
+        padding: 1rem 0 3rem;
+    }
+
+    .site-header,
+    .site-footer,
+    .panel {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        box-shadow: 0 20px 45px rgba(15, 23, 42, 0.06);
+        border-radius: 1rem;
+    }
+
+    .site-header {
+        position: sticky;
+        top: 1rem;
+        z-index: 20;
+        backdrop-filter: blur(12px);
+    }
+
+    .header-inner,
+    .footer-inner,
+    .page-top,
+    .toolbar,
+    .auth-grid,
+    .split-grid,
+    .hero {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .header-inner,
+    .footer-inner,
+    .page-top,
+    .toolbar {
+        grid-template-columns: 1fr;
+        align-items: center;
+        padding: 1rem 1.25rem;
+    }
+
+    .brand {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .brand-name {
+        font-size: 1.15rem;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+    }
+
+    .brand-tag,
+    .muted,
+    .section-note {
+        color: var(--muted);
+    }
+
+    .nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.65rem;
+    }
+
+    .nav form {
+        display: inline;
+    }
+
+    .nav a,
+    .nav button,
+    .chip {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.8rem;
+        padding: 0.65rem 0.9rem;
+        border: 1px solid transparent;
+        background: #f8fafc;
+    }
+
+    .nav a.active,
+    .nav a:hover,
+    .chip.accent {
+        border-color: rgba(15, 118, 110, 0.15);
+        background: rgba(15, 118, 110, 0.08);
+        color: var(--brand-strong);
+    }
+
+    .site-main {
+        padding-top: 1rem;
+    }
+
+    .hero {
+        grid-template-columns: 1fr;
+        padding: 1.5rem;
+    }
+
+    .hero-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--brand-strong);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 0.78rem;
+    }
+
+    .hero h1,
+    .section-title {
+        margin: 0;
+        line-height: 1.1;
+    }
+
+    .hero h1 {
+        font-size: clamp(2rem, 8vw, 4rem);
+        max-width: 12ch;
+    }
+
+    .split-grid,
+    .card-grid,
+    .auth-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.75rem;
+    }
+
+    .stat {
+        padding: 1rem;
+        border-radius: 0.9rem;
+        background: #f8fafc;
+        border: 1px solid var(--border);
+    }
+
+    .stat strong {
+        display: block;
+        font-size: 1.2rem;
+    }
+
+    .panel {
+        padding: 1.25rem;
+    }
+
+    .content-block {
+        padding: 1rem 0;
+    }
+
+    .content-block[dir="rtl"] {
+        text-align: right;
+    }
+
+    .form {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .form label {
+        display: grid;
+        gap: 0.45rem;
+        font-weight: 600;
+    }
+
+    .form input,
+    .form textarea,
+    .form select {
+        width: 100%;
+        border: 1px solid var(--border);
+        border-radius: 0.85rem;
+        padding: 0.9rem 1rem;
+        background: #fff;
+        outline: none;
+    }
+
+    .form input:focus,
+    .form textarea:focus,
+    .form select:focus {
+        border-color: rgba(15, 118, 110, 0.35);
+        box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.1);
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        border: none;
+        border-radius: 0.85rem;
+        padding: 0.85rem 1.1rem;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        background: var(--brand);
+        color: #fff;
+    }
+
+    .btn-primary:hover {
+        background: var(--brand-strong);
+    }
+
+    .btn-secondary {
+        background: #e2e8f0;
+        color: #0f172a;
+    }
+
+    .alert {
+        padding: 0.9rem 1rem;
+        border-radius: 0.85rem;
+        background: #fef2f2;
+        color: #b91c1c;
+        border: 1px solid #fecaca;
+    }
+
+    .footer-inner {
+        color: var(--muted);
+        font-size: 0.95rem;
+    }
+
+    @media (min-width: 768px) {
+        .header-inner,
+        .footer-inner,
+        .page-top,
+        .toolbar,
+        .split-grid,
+        .auth-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .hero {
+            grid-template-columns: 1.2fr 0.8fr;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .toolbar {
+            align-items: center;
+        }
+
+        .site-footer .footer-inner {
+            grid-template-columns: 1fr auto;
+        }
+
+        .nav {
+            justify-content: flex-end;
+        }
+
+        .stat-grid {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+    }
+}
+
+.locale-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding-inline: 0.75rem;
+    border-radius: 999px;
+}
+
+.locale-pill a {
+    padding: 0.45rem 0.7rem;
+    border-radius: 999px;
+    border: 1px solid transparent;
+}
+
+.hero-card,
+.accent-panel {
+    border-color: rgba(15, 118, 110, 0.12);
+}
