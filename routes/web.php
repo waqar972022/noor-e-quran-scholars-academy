@@ -5,18 +5,17 @@ use App\Http\Controllers\Admin\CourseController as AdminCourseController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\SettingController as AdminSettingController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PricingController;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'home')->name('home');
-
-Route::get('/language/{locale}', function (string $locale) {
-    if (! in_array($locale, ['en', 'ur'], true)) {
-        abort(404);
-    }
-    request()->session()->put('locale', $locale);
-    return redirect()->to(url()->previous() ?: route('home'));
-})->name('locale.switch');
+Route::get('/', HomeController::class)->name('home');
+Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
+Route::get('/courses/{slug}', [CourseController::class, 'show'])->name('courses.show');
+Route::get('/pricing', PricingController::class)->name('pricing');
+Route::view('/live-classes', 'live-classes')->name('live-classes');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'index'])->name('login');

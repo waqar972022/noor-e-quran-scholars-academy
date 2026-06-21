@@ -36,4 +36,4 @@ npm-debug.log*
 Thumbs.db
 yarn-debug.log*
 yarn-error.log*
-/.graphify-out
+/graphify-out

@@ -1,14 +1,5 @@
-{{--
-    layouts/app.blade.php
-    General-purpose layout for ALL pages (public + logged-in).
-    Sticky navbar + @yield('content') + footer.
-    No sidebar at the layout level — add sidebar inside @section('content') when needed.
---}}
 <!doctype html>
-<html
-    lang="{{ str_replace('_', '-', app()->getLocale()) }}"
-    dir="{{ app()->getLocale() === 'ur' ? 'rtl' : 'ltr' }}"
->
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,25 +9,10 @@
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     @endif
-    {{-- NOTE: do NOT add qalam-theme.css here; app.css already @imports it --}}
 
     <style>
-        body {
-            background: var(--q-parch);
-        }
-
+        body { background: var(--q-parch); }
         main { display: block; }
-
-        /* ── Urdu / RTL font stack ───────────────────────── */
-        :lang(ur),
-        [dir="rtl"] .q-navbar-name,
-        [dir="rtl"] .q-navbar-links a,
-        [dir="rtl"] .q-slide-title,
-        [dir="rtl"] .q-slide-desc,
-        [dir="rtl"] .q-slide-eyebrow {
-            font-family: 'Noto Nastaliq Urdu', 'Urdu Typesetting', 'Traditional Arabic', 'Scheherazade New', serif;
-            line-height: 1.9;
-        }
 
         /* ── Navbar ─────────────────────────────────────────── */
         .q-navbar {
@@ -100,28 +76,6 @@
         .q-navbar-links a.active { color: var(--q-green); font-weight: 500; }
         .q-navbar-actions { display: flex; gap: 8px; align-items: center; }
 
-        /* ── Language toggle ─────────────────────────────── */
-        .q-lang-toggle {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 12px;
-            border: 1px solid var(--q-border);
-            border-radius: 20px;
-            padding: 2px 8px;
-            background: transparent;
-        }
-        .q-lang-toggle a {
-            color: var(--q-ink-2);
-            text-decoration: none;
-            transition: color .2s;
-            padding: 1px 3px;
-            border-radius: 10px;
-        }
-        .q-lang-toggle a:hover { color: var(--q-green); }
-        .q-lang-toggle a.q-lang-active { color: var(--q-green); font-weight: 700; }
-        .q-lang-sep { color: var(--q-border); font-size: 10px; }
-
         @media (min-width: 640px) {
             .q-navbar-links { display: flex; }
         }
@@ -137,48 +91,30 @@
             <div class="q-navbar-mark">ن</div>
             <div>
                 <span class="q-navbar-name">{{ setting('site_name', config('app.name')) }}</span>
-                <span class="q-navbar-sub">{{ __('ui.nav.brand_tag') }}</span>
+                <span class="q-navbar-sub">Islamic Learning Platform</span>
             </div>
         </a>
 
         <ul class="q-navbar-links">
-            <li><a href="{{ url('/') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}">{{ __('ui.nav.home') }}</a></li>
-            <li><a href="#">{{ __('ui.nav.courses') }}</a></li>
-            <li><a href="#">{{ __('ui.nav.library') }}</a></li>
-            <li><a href="#">{{ __('ui.nav.pricing') }}</a></li>
+            <li><a href="{{ url('/') }}"                  class="{{ request()->routeIs('home')          ? 'active' : '' }}">Home</a></li>
+            <li><a href="{{ route('courses.index') }}"     class="{{ request()->routeIs('courses.*')     ? 'active' : '' }}">Courses</a></li>
+            <li><a href="{{ route('live-classes') }}"      class="{{ request()->routeIs('live-classes')  ? 'active' : '' }}">Live Classes</a></li>
+            <li><a href="{{ route('pricing') }}"           class="{{ request()->routeIs('pricing')       ? 'active' : '' }}">Pricing</a></li>
         </ul>
 
         <div class="q-navbar-actions">
-
-            {{-- Language switcher --}}
-            <div class="q-lang-toggle" aria-label="{{ __('ui.nav.language') }}">
-                <a href="{{ route('locale.switch', 'en') }}"
-                   class="{{ app()->getLocale() === 'en' ? 'q-lang-active' : '' }}"
-                   aria-label="Switch to English">EN</a>
-                <span class="q-lang-sep">|</span>
-                <a href="{{ route('locale.switch', 'ur') }}"
-                   class="{{ app()->getLocale() === 'ur' ? 'q-lang-active' : '' }}"
-                   aria-label="Switch to Urdu">اردو</a>
-            </div>
-
             @auth
                 <a href="{{ auth()->user()->role === 'admin' ? route('admin.dashboard') : route('dashboard') }}"
-                   class="q-btn q-btn-outline q-btn-sm">
-                    {{ __('ui.nav.dashboard') }}
-                </a>
+                   class="q-btn q-btn-outline q-btn-sm">Dashboard</a>
                 <form method="POST" action="{{ route('logout') }}" style="display:inline">
                     @csrf
-                    <button type="submit" class="q-btn q-btn-ghost q-btn-sm">{{ __('ui.nav.sign_out') }}</button>
+                    <button type="submit" class="q-btn q-btn-ghost q-btn-sm">Sign Out</button>
                 </form>
             @else
                 <a href="{{ route('login') }}"
-                   class="q-btn q-btn-ghost q-btn-sm {{ request()->routeIs('login') ? 'active' : '' }}">
-                    {{ __('ui.nav.sign_in') }}
-                </a>
+                   class="q-btn q-btn-ghost q-btn-sm {{ request()->routeIs('login') ? 'active' : '' }}">Sign In</a>
                 <a href="{{ route('register') }}"
-                   class="q-btn q-btn-primary q-btn-sm {{ request()->routeIs('register') ? 'active' : '' }}">
-                    {{ __('ui.nav.register') }}
-                </a>
+                   class="q-btn q-btn-primary q-btn-sm {{ request()->routeIs('register') ? 'active' : '' }}">Register</a>
             @endauth
         </div>
     </nav>

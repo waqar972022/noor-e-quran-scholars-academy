@@ -1,49 +1,32 @@
 <footer class="q-footer">
-    <div class="q-footer-grid">
+    <div class="q-footer-grid" style="grid-template-columns: 1.5fr 1fr 1fr">
 
         {{-- Col 1: Brand --}}
         <div class="q-footer-col">
             <div class="q-footer-brand">
-                <div class="q-footer-mark">ق</div>
+                <div class="q-footer-mark">ن</div>
                 <span class="q-footer-name">{{ setting('site_name', config('app.name')) }}</span>
             </div>
             <p class="q-footer-tagline">
                 Authentic Islamic knowledge — anytime, anywhere.
-                Courses, library, and certificates taught by qualified scholars.
+                Digital courses, live 1-on-1 classes, and completion certificates.
             </p>
         </div>
 
-        {{-- Col 2: Courses --}}
+        {{-- Col 2: Learn --}}
         <div class="q-footer-col">
-            <h4 class="q-footer-heading">Courses</h4>
+            <h4 class="q-footer-heading">Learn</h4>
             <ul class="q-footer-links">
-                <li><a href="#">Quran Recitation</a></li>
-                <li><a href="#">Islamic Jurisprudence</a></li>
-                <li><a href="#">Arabic Language</a></li>
-                <li><a href="#">Hadith Studies</a></li>
-                <li><a href="#">Seerah</a></li>
+                <li><a href="{{ route('courses.index') }}">All Courses</a></li>
+                <li><a href="{{ route('live-classes') }}">Live 1-on-1 Classes</a></li>
+                <li><a href="{{ route('pricing') }}">Pricing &amp; Plans</a></li>
             </ul>
         </div>
 
-        {{-- Col 3: Library --}}
+        {{-- Col 3: Account --}}
         <div class="q-footer-col">
-            <h4 class="q-footer-heading">Library</h4>
+            <h4 class="q-footer-heading">Account</h4>
             <ul class="q-footer-links">
-                <li><a href="#">Classical Texts</a></li>
-                <li><a href="#">Tafseer</a></li>
-                <li><a href="#">Fiqh Books</a></li>
-                <li><a href="#">Seerah Books</a></li>
-                <li><a href="#">Browse All Books</a></li>
-            </ul>
-        </div>
-
-        {{-- Col 4: Contact --}}
-        <div class="q-footer-col">
-            <h4 class="q-footer-heading">Quick Links</h4>
-            <ul class="q-footer-links">
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Pricing &amp; Plans</a></li>
-                <li><a href="#">Certificates</a></li>
                 <li><a href="{{ route('login') }}">Sign In</a></li>
                 <li><a href="{{ route('register') }}">Register Free</a></li>
             </ul>
