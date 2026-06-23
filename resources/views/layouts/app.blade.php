@@ -19,7 +19,7 @@
             position: sticky;
             top: 0;
             z-index: 50;
-            background: var(--q-parch-2);
+            background: var(--q-parch);
             border-bottom: 1.5px solid var(--q-border);
             padding: 0 1.5rem;
             height: 58px;

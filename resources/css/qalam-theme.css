@@ -6,41 +6,51 @@
 
 /* ── CSS Custom Properties ────────────────────────────────── */
 :root {
-    /* Navy palette */
-    --q-parch:         #0B1628;   /* page background — deep navy */
-    --q-parch-2:       #102040;   /* card / surface */
-    --q-parch-3:       #16284C;   /* input background / tab strip */
-    --q-parch-4:       #1C3260;   /* hover tints */
+    /* Light backgrounds */
+    --q-parch:         #FFFFFF;                        /* page background — white */
+    --q-parch-2:       #F2F6F2;                        /* card / surface — very light with subtle green tint */
+    --q-parch-3:       #EAEEEA;                        /* input background */
+    --q-parch-4:       #E0E5E0;                        /* hover tints */
+
+    /* Semantic */
+    --q-footer-bg:     #FAF8F3;                        /* footer — warm parchment */
 
     /* Text */
-    --q-ink:           #EDE8D8;   /* primary text — warm off-white */
-    --q-ink-2:         #C0B89A;   /* secondary text */
-    --q-muted:         #7A7060;   /* placeholder / meta */
+    --q-ink:           #1A1A16;                        /* primary text — dark ink */
+    --q-ink-2:         #4A4A46;                        /* secondary text */
+    --q-muted:         #8A8A84;                        /* placeholder / meta */
 
-    /* Brand colours — gold primary */
-    --q-green:         #C9A84C;   /* primary action — warm gold */
-    --q-green-hover:   #D4B865;   /* button hover — lighter gold */
-    --q-green-light:   rgba(201, 168, 76, 0.18);   /* dim gold tint */
-    --q-gold:          #E0A020;   /* accent labels — amber */
-    --q-gold-2:        #F0B828;   /* ornament / divider glow */
+    /* Brand colours — dark forest green primary, warm gold accent */
+    --q-green:         #1B4332;                        /* primary action — dark forest green */
+    --q-green-hover:   #2D6A4F;                        /* button hover — medium forest green */
+    --q-green-light:   rgba(27, 67, 50, 0.10);         /* dim green tint */
+    --q-gold:          #B8860B;                        /* accent labels — warm muted gold */
+    --q-gold-2:        #C9973D;                        /* ornament / divider — lighter gold */
 
     /* Borders */
-    --q-border:        rgba(201, 168, 76, 0.18);
-    --q-border-focus:  rgba(201, 168, 76, 0.50);
+    --q-border:        rgba(27, 67, 50, 0.14);
+    --q-border-focus:  rgba(27, 67, 50, 0.42);
 
     /* Radius */
     --q-radius:        8px;
     --q-radius-lg:     14px;
     --q-radius-xl:     20px;
 
-    /* Shadows */
-    --q-shadow-card:   0 4px 24px rgba(0, 0, 0, 0.35);
-    --q-shadow-panel:  0 8px 40px rgba(0, 0, 0, 0.50);
+    /* Shadows — lighter for white backgrounds */
+    --q-shadow-card:   0 2px 12px rgba(0, 0, 0, 0.07);
+    --q-shadow-panel:  0 4px 24px rgba(0, 0, 0, 0.10);
 
     /* Typography */
     --q-font-sans:     'Inter', system-ui, -apple-system, sans-serif;
     --q-font-serif:    'Amiri', Georgia, serif;
     --q-font-prose:    'Lora', Georgia, serif;
+
+    /* Hero / Slider — dark green contrasting section */
+    --q-hero-from:     #1B4332;                        /* slider gradient start */
+    --q-hero-to:       #143825;                        /* slider gradient end — slightly deeper */
+    --q-hero-text:     #FFFFFF;                        /* slide heading text */
+    --q-hero-text-sub: rgba(255, 255, 255, 0.72);      /* slide description text */
+    --q-hero-deco:     rgba(255, 255, 255, 0.06);      /* Arabic calligraphy decoration */
 }
 
 /* ── Reset helpers ────────────────────────────────────────── */
@@ -237,9 +247,9 @@ img { max-width: 100%; display: block; }
 
 /* ── Footer ───────────────────────────────────────────────── */
 .q-footer {
-    background: var(--q-parch);
+    background: var(--q-footer-bg);
     color: color-mix(in srgb, var(--q-ink) 85%, transparent);
-    border-top: 1px solid var(--q-border);
+    border-top: 2px solid var(--q-gold);
     padding: 3rem 1.5rem 1.5rem;
 }
 .q-footer-grid {
@@ -265,19 +275,19 @@ img { max-width: 100%; display: block; }
     width: 36px;
     height: 36px;
     border-radius: 8px;
-    background: color-mix(in srgb, var(--q-ink) 12%, transparent);
+    background: var(--q-green);
     display: grid;
     place-items: center;
     font-family: var(--q-font-serif);
     font-size: 18px;
-    color: var(--q-ink);
+    color: var(--q-footer-bg);
     font-weight: 700;
     flex-shrink: 0;
 }
 .q-footer-name {
     font-family: var(--q-font-serif);
     font-size: 1rem;
-    color: var(--q-ink);
+    color: var(--q-green);
     font-weight: 700;
 }
 .q-footer-tagline {
@@ -291,7 +301,7 @@ img { max-width: 100%; display: block; }
     font-weight: 700;
     letter-spacing: .13em;
     text-transform: uppercase;
-    color: color-mix(in srgb, var(--q-ink) 45%, transparent);
+    color: var(--q-gold);
     margin-bottom: .85rem;
 }
 .q-footer-links {
@@ -305,17 +315,18 @@ img { max-width: 100%; display: block; }
     color: color-mix(in srgb, var(--q-ink) 72%, transparent);
     transition: color .2s;
 }
-.q-footer-links a:hover { color: var(--q-ink); }
+.q-footer-links a:hover { color: var(--q-green); }
 .q-footer-bottom {
     max-width: 1100px;
     margin: 2rem auto 0;
     padding-top: 1.25rem;
-    border-top: 1px solid color-mix(in srgb, var(--q-ink) 12%, transparent);
+    border-top: 1px solid color-mix(in srgb, var(--q-gold) 25%, transparent);
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: .78rem;
-    opacity: .5;
+    color: var(--q-gold-2);
+    opacity: .75;
     flex-wrap: wrap;
     gap: .5rem;
 }

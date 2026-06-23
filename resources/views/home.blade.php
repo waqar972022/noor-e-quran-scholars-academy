@@ -33,7 +33,7 @@
     .q-slide-deco {
         font-family: var(--q-font-serif);
         font-size: 6rem;
-        color: color-mix(in srgb, var(--q-green) 8%, transparent);
+        color: var(--q-hero-deco);
         line-height: 1;
         flex-shrink: 0;
         direction: rtl;
@@ -43,27 +43,33 @@
     .q-slide-title {
         font-family: var(--q-font-serif);
         font-size: 2rem;
-        color: var(--q-ink);
+        color: var(--q-hero-text);
         line-height: 1.3;
         margin-bottom: .7rem;
         font-weight: 700;
     }
     .q-slide-desc {
         font-size: 13px;
-        color: var(--q-muted);
+        color: var(--q-hero-text-sub);
         line-height: 1.75;
         margin-bottom: 1.2rem;
         max-width: 380px;
     }
     .q-slide-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 
+    /* Slider buttons — gold primary, white ghost outline on dark green bg */
+    .q-slider .q-btn-primary { background: var(--q-gold); color: var(--q-hero-text); }
+    .q-slider .q-btn-primary:hover { background: var(--q-gold-2); }
+    .q-slider .q-btn-outline { border-color: color-mix(in srgb, var(--q-hero-text) 65%, transparent); color: var(--q-hero-text); background: transparent; }
+    .q-slider .q-btn-outline:hover { background: color-mix(in srgb, var(--q-hero-text) 12%, transparent); }
+
     .q-slider-arrow {
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        background: color-mix(in srgb, var(--q-parch-2) 80%, transparent);
-        border: 1.5px solid var(--q-border);
-        color: var(--q-green);
+        background: color-mix(in srgb, var(--q-hero-text) 10%, transparent);
+        border: 1.5px solid color-mix(in srgb, var(--q-hero-text) 25%, transparent);
+        color: var(--q-hero-text);
         width: 36px; height: 36px;
         border-radius: 50%;
         cursor: pointer;
@@ -74,7 +80,7 @@
         justify-content: center;
         transition: background .2s;
     }
-    .q-slider-arrow:hover { background: var(--q-parch-2); }
+    .q-slider-arrow:hover { background: color-mix(in srgb, var(--q-hero-text) 20%, transparent); }
     .q-slider-prev { left: 14px; }
     .q-slider-next { right: 14px; }
 
@@ -91,12 +97,12 @@
         width: 7px; height: 7px;
         border-radius: 50%;
         border: none;
-        background: color-mix(in srgb, var(--q-green) 20%, transparent);
+        background: color-mix(in srgb, var(--q-hero-text) 30%, transparent);
         cursor: pointer;
         transition: all .3s;
         padding: 0;
     }
-    .q-slider-dot.active { background: var(--q-green); width: 22px; border-radius: 4px; }
+    .q-slider-dot.active { background: var(--q-gold); width: 22px; border-radius: 4px; }
 
     @media (max-width: 600px) {
         .q-slide-deco  { display: none; }
@@ -178,7 +184,7 @@
     }
     .q-cta-band p {
         font-size: 13px;
-        color: color-mix(in srgb, var(--q-ink) 70%, transparent);
+        color: var(--q-hero-text-sub);
         margin-bottom: 1.2rem;
     }
     .q-btn-parch { background: var(--q-parch); color: var(--q-green); font-weight: 700; }
@@ -192,7 +198,7 @@
 <section class="q-slider" id="heroSlider" aria-label="Featured slides">
 
     <div class="q-slide active" data-slide="0"
-         style="background: linear-gradient(135deg, var(--q-parch-2) 0%, var(--q-parch-3) 100%)">
+         style="background: linear-gradient(135deg, var(--q-hero-from) 0%, var(--q-hero-to) 100%)">
         <div class="q-slide-inner">
             <div class="q-slide-deco" aria-hidden="true">بِسْمِ اللَّهِ</div>
             <div class="q-slide-content">
@@ -208,7 +214,7 @@
     </div>
 
     <div class="q-slide" data-slide="1"
-         style="background: linear-gradient(135deg, var(--q-parch-3) 0%, color-mix(in srgb, var(--q-green) 18%, transparent) 100%)">
+         style="background: linear-gradient(135deg, var(--q-hero-to) 0%, var(--q-hero-from) 100%)">
         <div class="q-slide-inner">
             <div class="q-slide-deco" aria-hidden="true">الْعِلْم</div>
             <div class="q-slide-content">
@@ -224,7 +230,7 @@
     </div>
 
     <div class="q-slide" data-slide="2"
-         style="background: linear-gradient(135deg, var(--q-parch-2) 0%, color-mix(in srgb, var(--q-gold) 20%, transparent) 100%)">
+         style="background: linear-gradient(135deg, var(--q-hero-from) 0%, var(--q-hero-to) 100%)">
         <div class="q-slide-inner">
             <div class="q-slide-deco" aria-hidden="true">الْإِسْلَام</div>
             <div class="q-slide-content">
