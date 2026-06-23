@@ -40,6 +40,25 @@
                 Courses
             </a>
 
+            <span class="q-admin-nav-section">Payments</span>
+            <a href="{{ route('admin.payments.index') }}"
+               class="{{ request()->routeIs('admin.payments.*') ? 'active' : '' }}"
+               style="display:flex;align-items:center;justify-content:space-between">
+                <span>Payment Requests</span>
+                @php $pendingCount = \App\Models\PaymentRequest::where('status','pending')->count(); @endphp
+                @if ($pendingCount > 0)
+                    <span style="background:#dc2626;color:#fff;border-radius:999px;padding:1px 7px;font-size:.68rem;font-weight:700;min-width:18px;text-align:center">
+                        {{ $pendingCount }}
+                    </span>
+                @endif
+            </a>
+
+            <span class="q-admin-nav-section">Users</span>
+            <a href="{{ route('admin.users.index') }}"
+               class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+                All Users
+            </a>
+
             <span class="q-admin-nav-section">Config</span>
             <a href="{{ route('admin.settings') }}"
                class="{{ request()->routeIs('admin.settings') ? 'active' : '' }}">

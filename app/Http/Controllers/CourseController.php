@@ -13,14 +13,14 @@ class CourseController extends Controller
     {
         $query = Course::with('category')->where('status', 'published');
 
-        if ($search = $request->get('q')) {
+        if ($search = $request->query('q')) {
             $query->where(function ($q) use ($search) {
                 $q->where('title', 'like', "%{$search}%")
                   ->orWhere('short_description', 'like', "%{$search}%");
             });
         }
 
-        if ($category = $request->get('category')) {
+        if ($category = $request->query('category')) {
             $query->whereHas('category', fn ($q) => $q->where('slug', $category));
         }
 
@@ -44,6 +44,24 @@ class CourseController extends Controller
             ->where('slug', $slug)
             ->firstOrFail();
 
-        return view('courses.show', compact('course'));
+        $isSubscribed = $course->is_free || (auth()->check() && auth()->user()->hasActiveSubscription());
+
+        $completedVideoIds = [];
+        $completedCount    = 0;
+        $totalVideos       = $course->videos->count();
+
+        if (auth()->check() && $isSubscribed) {
+            $completedVideoIds = auth()->user()
+                ->lessonProgress()
+                ->whereIn('course_video_id', $course->videos->pluck('id'))
+                ->pluck('course_video_id')
+                ->toArray();
+            $completedCount = count($completedVideoIds);
+        }
+
+        return view('courses.show', compact(
+            'course', 'isSubscribed',
+            'completedVideoIds', 'completedCount', 'totalVideos'
+        ));
     }
 }

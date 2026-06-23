@@ -1,5 +1,5 @@
 <footer class="q-footer">
-    <div class="q-footer-grid" style="grid-template-columns: 1.5fr 1fr 1fr">
+    <div class="q-footer-grid">
 
         {{-- Col 1: Brand --}}
         <div class="q-footer-col">
@@ -9,7 +9,7 @@
             </div>
             <p class="q-footer-tagline">
                 Authentic Islamic knowledge — anytime, anywhere.
-                Digital courses, live 1-on-1 classes, and completion certificates.
+                Digital courses and live 1-on-1 classes with verified scholars.
             </p>
         </div>
 
@@ -29,6 +29,15 @@
             <ul class="q-footer-links">
                 <li><a href="{{ route('login') }}">Sign In</a></li>
                 <li><a href="{{ route('register') }}">Register Free</a></li>
+            </ul>
+        </div>
+
+        {{-- Col 4: Legal --}}
+        <div class="q-footer-col">
+            <h4 class="q-footer-heading">Legal</h4>
+            <ul class="q-footer-links">
+                <li><a href="{{ route('terms') }}">Terms of Service</a></li>
+                <li><a href="{{ route('privacy') }}">Privacy Policy</a></li>
             </ul>
         </div>
 

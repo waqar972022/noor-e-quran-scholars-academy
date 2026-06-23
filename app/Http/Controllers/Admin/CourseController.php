@@ -63,9 +63,10 @@ class CourseController extends Controller
             'category_id'       => $request->category_id,
             'owner_id'          => auth()->id(),
             'short_description' => $request->short_description,
-            'long_description'  => $request->long_description,
+            'long_description'  => $request->long_description ?? '',
             'thumbnail'         => $thumbPath,
             'is_premium'        => true,
+            'is_free'           => $request->boolean('is_free'),
             'status'            => $request->status,
         ]);
 
@@ -101,7 +102,8 @@ class CourseController extends Controller
             'title'             => $request->title,
             'category_id'       => $request->category_id,
             'short_description' => $request->short_description,
-            'long_description'  => $request->long_description,
+            'long_description'  => $request->long_description ?? '',
+            'is_free'           => $request->boolean('is_free'),
             'status'            => $request->status,
         ];
 
@@ -145,7 +147,10 @@ class CourseController extends Controller
     {
         abort_if($file->course_id !== $course->id, 404);
 
-        Storage::disk('local')->delete($file->file_path);
+        $fullPath = public_path($file->file_path);
+        if (file_exists($fullPath)) {
+            unlink($fullPath);
+        }
         $file->delete();
 
         return back()->with('success', 'PDF removed.');
@@ -216,6 +221,11 @@ class CourseController extends Controller
             return;
         }
 
+        $dir = public_path('course-files/' . $course->id);
+        if (! is_dir($dir)) {
+            mkdir($dir, 0755, true);
+        }
+
         foreach ($request->file('pdf_files') as $i => $pdf) {
             $realMime = (new \finfo(FILEINFO_MIME_TYPE))->file($pdf->getPathname());
             if ($realMime !== 'application/pdf') {
@@ -224,12 +234,13 @@ class CourseController extends Controller
 
             $pdfName = Str::slug(pathinfo($pdf->getClientOriginalName(), PATHINFO_FILENAME))
                 . '-' . time() . '-' . $i . '.pdf';
-            $pdfPath = $pdf->storeAs('course-files/' . $course->id, $pdfName);
+
+            $pdf->move($dir, $pdfName);
 
             CourseFile::create([
                 'course_id'  => $course->id,
                 'file_title' => $request->input("pdf_titles.{$i}") ?: $pdf->getClientOriginalName(),
-                'file_path'  => $pdfPath,
+                'file_path'  => 'course-files/' . $course->id . '/' . $pdfName,
             ]);
         }
     }

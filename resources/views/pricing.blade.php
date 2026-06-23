@@ -36,11 +36,12 @@
     flex-direction: column;
     border: 1.5px solid var(--q-border);
     border-radius: var(--q-radius-xl);
-    overflow: hidden;
+    overflow: visible;
     background: var(--q-parch-2);
     box-shadow: var(--q-shadow-card);
     position: relative;
     transition: box-shadow .2s, transform .18s;
+    margin-top: 1rem;
 }
 .q-plan-card:hover {
     box-shadow: var(--q-shadow-panel);
@@ -134,7 +135,7 @@
 <div class="q-pricing-hero">
     <p class="q-eyebrow">Plans &amp; Pricing</p>
     <h1 class="q-section-title" style="margin-top:.3rem">Simple, Transparent Pricing</h1>
-    <p class="q-pricing-sub">Every plan unlocks all video courses, PDF books, and completion certificates.</p>
+    <p class="q-pricing-sub">Every plan unlocks all video courses and PDF books.</p>
 </div>
 
 <div class="q-pricing-wrap">
@@ -164,22 +165,15 @@
                         <li class="q-plan-feature"><span class="q-plan-check" aria-hidden="true">✓</span> Access to all courses</li>
                         <li class="q-plan-feature"><span class="q-plan-check" aria-hidden="true">✓</span> HD video lessons</li>
                         <li class="q-plan-feature"><span class="q-plan-check" aria-hidden="true">✓</span> Full PDF book library</li>
-                        <li class="q-plan-feature"><span class="q-plan-check" aria-hidden="true">✓</span> Completion certificates</li>
                         <li class="q-plan-feature"><span class="q-plan-check" aria-hidden="true">✓</span> Scholar Q&amp;A support</li>
                     </ul>
 
                     <div class="q-plan-cta">
-                        @auth
-                            {{-- Checkout link — wired in Prompt 5 --}}
-                            <a href="#" class="q-btn {{ $isPopular ? 'q-btn-primary' : 'q-btn-outline' }} q-btn-full">
-                                Get Started
-                            </a>
-                        @else
-                            <a href="{{ route('register') }}"
-                               class="q-btn {{ $isPopular ? 'q-btn-primary' : 'q-btn-outline' }} q-btn-full">
-                                Get Started
-                            </a>
-                        @endauth
+                        {{-- Auth middleware stores intended URL and redirects after login --}}
+                        <a href="{{ route('checkout.show', $plan) }}"
+                           class="q-btn {{ $isPopular ? 'q-btn-primary' : 'q-btn-outline' }} q-btn-full">
+                            Subscribe
+                        </a>
                     </div>
 
                 </div>

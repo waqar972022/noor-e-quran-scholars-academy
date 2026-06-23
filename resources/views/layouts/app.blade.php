@@ -104,6 +104,24 @@
 
         <div class="q-navbar-actions">
             @auth
+                @if (auth()->user()->role !== 'admin')
+                    @php $unreadCount = auth()->user()->unreadNotifications()->count(); @endphp
+                    <a href="{{ route('notifications.index') }}"
+                       class="q-btn q-btn-ghost q-btn-sm"
+                       style="position:relative;padding-right:{{ $unreadCount > 0 ? '1.6rem' : '.75rem' }}"
+                       aria-label="Notifications{{ $unreadCount > 0 ? ' ('.$unreadCount.' unread)' : '' }}">
+                        Alerts
+                        @if ($unreadCount > 0)
+                            <span style="position:absolute;top:3px;right:3px;
+                                         background:#dc2626;color:#fff;
+                                         border-radius:999px;padding:0 5px;
+                                         font-size:.6rem;font-weight:700;line-height:1.5;
+                                         min-width:16px;text-align:center">
+                                {{ $unreadCount > 9 ? '9+' : $unreadCount }}
+                            </span>
+                        @endif
+                    </a>
+                @endif
                 <a href="{{ auth()->user()->role === 'admin' ? route('admin.dashboard') : route('dashboard') }}"
                    class="q-btn q-btn-outline q-btn-sm">Dashboard</a>
                 <form method="POST" action="{{ route('logout') }}" style="display:inline">
@@ -118,6 +136,33 @@
             @endauth
         </div>
     </nav>
+
+    {{-- ── Flash messages ── --}}
+    @if (session()->hasAny(['success', 'warning', 'error', 'info']))
+        @php
+            $flashType = session('success') ? 'success'
+                : (session('warning') ? 'warning'
+                : (session('error') ? 'error' : 'info'));
+            $flashMsg = session($flashType);
+            $flashColors = [
+                'success' => ['bg' => 'rgba(34,197,94,.12)',  'color' => '#4ade80'],
+                'warning' => ['bg' => 'rgba(245,158,11,.12)', 'color' => '#fbbf24'],
+                'error'   => ['bg' => 'rgba(220,38,38,.12)',  'color' => '#f87171'],
+                'info'    => ['bg' => 'rgba(59,130,246,.12)', 'color' => '#93c5fd'],
+            ];
+        @endphp
+        <div style="
+            background: {{ $flashColors[$flashType]['bg'] }};
+            color: {{ $flashColors[$flashType]['color'] }};
+            padding: .7rem 1.5rem;
+            font-size: .88rem;
+            font-weight: 500;
+            text-align: center;
+            border-bottom: 1px solid var(--q-border);
+        ">
+            {{ $flashMsg }}
+        </div>
+    @endif
 
     {{-- ── Page Content ── --}}
     <main role="main">

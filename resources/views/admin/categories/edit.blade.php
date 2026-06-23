@@ -22,7 +22,7 @@
             <input class="q-input @error('name') is-invalid @enderror"
                    type="text" id="name" name="name"
                    value="{{ old('name', $category->name) }}"
-                   autofocus>
+                   autofocus required>
             @error('name')<span class="q-error">{{ $message }}</span>@enderror
             <span class="q-help-text">Current slug: <code>{{ $category->slug }}</code> — will regenerate on save.</span>
         </div>

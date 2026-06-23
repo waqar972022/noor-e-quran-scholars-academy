@@ -24,7 +24,7 @@
             <label class="q-label" for="title">Title</label>
             <input class="q-input @error('title') is-invalid @enderror"
                    type="text" id="title" name="title"
-                   value="{{ old('title', $course->title) }}">
+                   value="{{ old('title', $course->title) }}" required>
             @error('title')<span class="q-error">{{ $message }}</span>@enderror
         </div>
 
@@ -32,7 +32,7 @@
             <div class="q-field">
                 <label class="q-label" for="category_id">Category</label>
                 <select class="q-input q-select @error('category_id') is-invalid @enderror"
-                        id="category_id" name="category_id">
+                        id="category_id" name="category_id" required>
                     <option value="">— Select category —</option>
                     @foreach ($categories as $cat)
                         <option value="{{ $cat->id }}"
@@ -53,17 +53,27 @@
         </div>
 
         <div class="q-field">
+            <label style="display:flex;align-items:center;gap:.6rem;cursor:pointer">
+                <input type="checkbox" name="is_free" value="1"
+                       {{ old('is_free', $course->is_free) ? 'checked' : '' }}
+                       style="width:16px;height:16px;accent-color:var(--q-green)">
+                <span class="q-label" style="margin:0">Free Course</span>
+            </label>
+            <span class="q-help-text">Anyone can access this course without a subscription.</span>
+        </div>
+
+        <div class="q-field">
             <label class="q-label" for="short_description">Short Description</label>
             <textarea class="q-input q-textarea @error('short_description') is-invalid @enderror"
                       id="short_description" name="short_description"
-                      maxlength="500" rows="2">{{ old('short_description', $course->short_description) }}</textarea>
+                      maxlength="500" rows="2" required>{{ old('short_description', $course->short_description) }}</textarea>
             @error('short_description')<span class="q-error">{{ $message }}</span>@enderror
         </div>
 
         <div class="q-field">
             <label class="q-label" for="long_description">Full Description</label>
             <textarea class="q-input q-textarea"
-                      id="long_description" name="long_description"
+                      id="long_description" name="long_description" required
                       rows="6">{{ old('long_description', $course->long_description) }}</textarea>
         </div>
     </div>
@@ -151,34 +161,35 @@
     </div>
 
     @foreach ($course->videos as $video)
-        <form method="POST" action="{{ route('admin.courses.videos.update', [$course, $video]) }}"
-              class="q-video-row">
-            @csrf
-            @method('PUT')
+        <div class="q-video-row">
+            <form method="POST" action="{{ route('admin.courses.videos.update', [$course, $video]) }}"
+                  style="display:contents">
+                @csrf
+                @method('PUT')
 
-            <input class="q-input q-video-order-input" type="number"
-                   name="video_order" value="{{ $video->video_order }}"
-                   min="0" title="Order">
+                <input class="q-input q-video-order-input" type="number"
+                       name="video_order" value="{{ $video->video_order }}"
+                       min="0" title="Order">
 
-            <input class="q-input" type="text" name="video_title"
-                   value="{{ $video->video_title }}" placeholder="Lesson title"
-                   style="flex:1;min-width:160px">
+                <input class="q-input" type="text" name="video_title"
+                       value="{{ $video->video_title }}" placeholder="Lesson title"
+                       style="flex:1;min-width:160px">
 
-            <input class="q-input" type="url" name="youtube_url"
-                   value="{{ $video->youtube_url }}" placeholder="YouTube URL"
-                   style="flex:2;min-width:200px">
+                <input class="q-input" type="url" name="youtube_url"
+                       value="{{ $video->youtube_url }}" placeholder="YouTube URL"
+                       style="flex:2;min-width:200px">
 
-            <button type="submit" class="q-btn q-btn-ghost q-btn-sm">Save</button>
+                <button type="submit" class="q-btn q-btn-ghost q-btn-sm">Save</button>
+            </form>
 
             <form method="POST"
                   action="{{ route('admin.courses.videos.destroy', [$course, $video]) }}"
-                  onsubmit="return confirm('Remove this video?')"
-                  style="display:inline">
+                  onsubmit="return confirm('Remove this video?')">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="q-btn q-btn-danger q-btn-sm">Remove</button>
             </form>
-        </form>
+        </div>
     @endforeach
 
     @if ($course->videos->isEmpty())

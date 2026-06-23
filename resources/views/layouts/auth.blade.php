@@ -20,8 +20,8 @@
     <style>
         body {
             background:
-                radial-gradient(ellipse at 0% 0%, rgba(27,67,50,.08) 0%, transparent 45%),
-                radial-gradient(ellipse at 100% 100%, rgba(154,107,31,.07) 0%, transparent 45%),
+                radial-gradient(ellipse at 0% 0%, color-mix(in srgb, var(--q-green) 8%, transparent) 0%, transparent 45%),
+                radial-gradient(ellipse at 100% 100%, color-mix(in srgb, var(--q-gold) 7%, transparent) 0%, transparent 45%),
                 var(--q-parch);
         }
 
@@ -30,7 +30,7 @@
             position: sticky;
             top: 0;
             z-index: 50;
-            background: rgba(245,240,228,.92);
+            background: var(--q-parch-2);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-bottom: 1.5px solid var(--q-border);
@@ -127,7 +127,7 @@
         .hero-side {
             padding: 2rem;
             background:
-                radial-gradient(ellipse at 20% 80%, rgba(27,67,50,.08) 0%, transparent 55%),
+                radial-gradient(ellipse at 20% 80%, color-mix(in srgb, var(--q-green) 8%, transparent) 0%, transparent 55%),
                 var(--q-parch-3);
             border-bottom: 1.5px solid var(--q-border);
             display: flex;
@@ -152,7 +152,7 @@
         .hero-deco {
             font-family: var(--q-font-serif);
             font-size: clamp(3rem, 10vw, 5.5rem);
-            color: rgba(27,67,50,.09);
+            color: color-mix(in srgb, var(--q-green) 9%, transparent);
             line-height: 1; margin-bottom: 1rem;
             direction: rtl; user-select: none;
         }
@@ -169,7 +169,7 @@
         .feature-badge {
             padding: .45rem .85rem; border-radius: 999px;
             border: 1.5px solid var(--q-border);
-            background: rgba(245,240,228,.6);
+            background: var(--q-parch-3);
             color: var(--q-ink-2); font-size: .75rem; font-weight: 500;
         }
         .hero-stats {
@@ -215,7 +215,7 @@
     {{-- ── Sticky Navbar ── --}}
     <nav class="q-navbar" role="navigation" aria-label="Main navigation">
         <a class="q-navbar-brand" href="{{ url('/') }}">
-            <div class="q-navbar-mark">ق</div>
+            <div class="q-navbar-mark">ن</div>
             <div>
                 <span class="q-navbar-name">{{ setting('site_name', config('app.name')) }}</span>
                 <span class="q-navbar-sub">Islamic Learning Platform</span>
@@ -224,9 +224,9 @@
 
         <ul class="q-navbar-links">
             <li><a href="{{ url('/') }}">Home</a></li>
-            <li><a href="#">Courses</a></li>
-            <li><a href="#">Library</a></li>
-            <li><a href="#">Pricing</a></li>
+            <li><a href="{{ route('courses.index') }}">Courses</a></li>
+            <li><a href="{{ route('live-classes') }}">Live Classes</a></li>
+            <li><a href="{{ route('pricing') }}">Pricing</a></li>
         </ul>
 
         <div class="q-navbar-actions">
@@ -255,41 +255,43 @@
 
                 <div class="hero-side" aria-hidden="true">
                     <div class="brand-lockup">
-                        <div class="brand-mark">ق</div>
+                        <div class="brand-mark">ن</div>
                         <div class="brand-copy">
                             <strong>{{ setting('site_name', config('app.name')) }}</strong>
                             <span>Islamic Learning Platform</span>
                         </div>
                     </div>
 
+                    @php
+                        $heroVideoCount   = \App\Models\CourseVideo::count();
+                        $heroPdfCount     = \App\Models\CourseFile::count();
+                        $heroVideoDisplay = $heroVideoCount < 10 ? '10+' : $heroVideoCount;
+                        $heroPdfDisplay   = $heroPdfCount   < 10 ? '10+' : $heroPdfCount;
+                        $heroPlans        = \App\Models\SubscriptionPlan::where('status', 'active')
+                                               ->orderBy('sort_order')->get();
+                    @endphp
+
                     <div class="hero-body">
                         <div class="hero-deco">بِسْمِ اللَّهِ</div>
                         <h2 class="hero-title">Authentic Islamic Knowledge — Anytime, Anywhere</h2>
                         <p class="hero-desc">
-                            Video courses, a complete digital library of classical texts,
-                            and verified completion certificates — taught by qualified scholars.
+                            Video lessons, downloadable PDF materials, and live 1-on-1 classes —
+                            taught by qualified scholars.
                         </p>
                         <div class="feature-list">
-                            <span class="feature-badge">120+ Video Courses</span>
-                            <span class="feature-badge">350+ Library Books</span>
-                            <span class="feature-badge">Completion Certificates</span>
+                            <span class="feature-badge">{{ $heroVideoDisplay }} Videos</span>
+                            <span class="feature-badge">{{ $heroPdfDisplay }} PDFs</span>
                             <span class="feature-badge">PKR Pricing</span>
                         </div>
                     </div>
 
                     <div class="hero-stats">
-                        <div>
-                            <div class="hero-stat-num">50k+</div>
-                            <div class="hero-stat-label">Active Learners</div>
-                        </div>
-                        <div>
-                            <div class="hero-stat-num">120+</div>
-                            <div class="hero-stat-label">Courses</div>
-                        </div>
-                        <div>
-                            <div class="hero-stat-num">350+</div>
-                            <div class="hero-stat-label">Books</div>
-                        </div>
+                        @foreach ($heroPlans as $heroPlan)
+                            <div>
+                                <div class="hero-stat-num" style="font-size:1.1rem">{{ pkr($heroPlan->price) }}</div>
+                                <div class="hero-stat-label">{{ $heroPlan->name }}</div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
 

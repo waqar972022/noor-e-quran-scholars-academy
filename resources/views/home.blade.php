@@ -15,13 +15,14 @@
         position: absolute;
         inset: 0;
         opacity: 0;
+        pointer-events: none;
         transition: opacity .65s ease;
         display: flex;
         align-items: center;
         justify-content: center;
         padding: 2rem;
     }
-    .q-slide.active { opacity: 1; }
+    .q-slide.active { opacity: 1; pointer-events: auto; }
     .q-slide-inner {
         display: flex;
         align-items: center;
@@ -32,7 +33,7 @@
     .q-slide-deco {
         font-family: var(--q-font-serif);
         font-size: 6rem;
-        color: rgba(27,67,50,.08);
+        color: color-mix(in srgb, var(--q-green) 8%, transparent);
         line-height: 1;
         flex-shrink: 0;
         direction: rtl;
@@ -60,7 +61,7 @@
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        background: rgba(245,240,228,.8);
+        background: color-mix(in srgb, var(--q-parch-2) 80%, transparent);
         border: 1.5px solid var(--q-border);
         color: var(--q-green);
         width: 36px; height: 36px;
@@ -90,7 +91,7 @@
         width: 7px; height: 7px;
         border-radius: 50%;
         border: none;
-        background: rgba(27,67,50,.2);
+        background: color-mix(in srgb, var(--q-green) 20%, transparent);
         cursor: pointer;
         transition: all .3s;
         padding: 0;
@@ -102,6 +103,7 @@
         .q-slider-arrow { display: none; }
         .q-slide-inner { justify-content: center; text-align: center; }
         .q-slide-actions { justify-content: center; }
+        .q-scholar-grid { grid-template-columns: 1fr !important; text-align: center; }
     }
 
     /* ── Courses ─────────────────────────────────────── */
@@ -123,7 +125,7 @@
         grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
         gap: 1.5rem;
     }
-    .q-card.q-course-card { padding: 0; overflow: hidden; }
+    .q-card.q-course-card { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
     .q-course-thumb {
         height: 90px;
         border-radius: var(--q-radius-lg) var(--q-radius-lg) 0 0;
@@ -132,14 +134,14 @@
         justify-content: center;
         font-family: var(--q-font-serif);
         font-size: 2.2rem;
-        color: rgba(27,67,50,.2);
+        color: color-mix(in srgb, var(--q-green) 20%, transparent);
         direction: rtl;
     }
-    .q-course-thumb--quran  { background: #d4e8c4; }
-    .q-course-thumb--fiqh   { background: #e8d9b8; }
-    .q-course-thumb--arabic { background: #c8dfc8; }
-    .q-course-thumb--seerah { background: #e0d4b8; }
-    .q-course-body { padding: 1rem 1.1rem 1.2rem; }
+    .q-course-thumb--quran  { background: color-mix(in srgb, var(--q-green) 20%, transparent); }
+    .q-course-thumb--fiqh   { background: var(--q-parch-3); }
+    .q-course-thumb--arabic { background: color-mix(in srgb, var(--q-green) 15%, transparent); }
+    .q-course-thumb--seerah { background: var(--q-parch-4); }
+    .q-course-body { padding: 1rem 1.1rem 1.2rem; flex: 1; display: flex; flex-direction: column; }
     .q-course-title {
         font-family: var(--q-font-prose);
         font-size: .95rem;
@@ -157,7 +159,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-top: .75rem;
+        margin-top: auto;
         padding-top: .75rem;
         border-top: 1px solid var(--q-border);
     }
@@ -176,7 +178,7 @@
     }
     .q-cta-band p {
         font-size: 13px;
-        color: rgba(245,240,228,.7);
+        color: color-mix(in srgb, var(--q-ink) 70%, transparent);
         margin-bottom: 1.2rem;
     }
     .q-btn-parch { background: var(--q-parch); color: var(--q-green); font-weight: 700; }
@@ -190,13 +192,13 @@
 <section class="q-slider" id="heroSlider" aria-label="Featured slides">
 
     <div class="q-slide active" data-slide="0"
-         style="background: linear-gradient(135deg, #EDE6D4 0%, #E2D9C4 40%, #D9CEAF 100%)">
+         style="background: linear-gradient(135deg, var(--q-parch-2) 0%, var(--q-parch-3) 100%)">
         <div class="q-slide-inner">
             <div class="q-slide-deco" aria-hidden="true">بِسْمِ اللَّهِ</div>
             <div class="q-slide-content">
                 <p class="q-eyebrow">Begin Your Journey</p>
                 <h1 class="q-slide-title">Learn Quran &amp; Hadith from Authentic Sources</h1>
-                <p class="q-slide-desc">Video courses, PDF books, and completion certificates — taught by verified scholars.</p>
+                <p class="q-slide-desc">Video courses and PDF books — taught by verified Islamic scholars.</p>
                 <div class="q-slide-actions">
                     <a href="{{ route('register') }}" class="q-btn q-btn-primary">Start Learning</a>
                     <a href="{{ route('courses.index') }}" class="q-btn q-btn-outline">Browse Courses</a>
@@ -206,15 +208,15 @@
     </div>
 
     <div class="q-slide" data-slide="1"
-         style="background: linear-gradient(135deg, #E2EDD8 0%, #D4E8C4 40%, #C5DDB0 100%)">
+         style="background: linear-gradient(135deg, var(--q-parch-3) 0%, color-mix(in srgb, var(--q-green) 18%, transparent) 100%)">
         <div class="q-slide-inner">
-            <div class="q-slide-deco" aria-hidden="true">الْمَكْتَبَة</div>
+            <div class="q-slide-deco" aria-hidden="true">الْعِلْم</div>
             <div class="q-slide-content">
-                <p class="q-eyebrow">Digital Library</p>
-                <h1 class="q-slide-title">350+ Classical Islamic Books in One Place</h1>
-                <p class="q-slide-desc">Tafsir Ibn Kathir, Sahih Al-Bukhari, Fiqh us-Sunnah — readable on any device as PDF.</p>
+                <p class="q-eyebrow">Live Classes</p>
+                <h1 class="q-slide-title">Learn Live with a Qualified Scholar</h1>
+                <p class="q-slide-desc">One-on-one and group sessions with verified Islamic scholars — flexible scheduling, PKR pricing.</p>
                 <div class="q-slide-actions">
-                    <a href="#" class="q-btn q-btn-primary">Browse Library</a>
+                    <a href="{{ route('live-classes') }}" class="q-btn q-btn-primary">View Live Classes</a>
                     <a href="{{ route('pricing') }}" class="q-btn q-btn-outline">View Pricing</a>
                 </div>
             </div>
@@ -222,15 +224,16 @@
     </div>
 
     <div class="q-slide" data-slide="2"
-         style="background: linear-gradient(135deg, #EDE0C4 0%, #E8D4A8 40%, #DEC88E 100%)">
+         style="background: linear-gradient(135deg, var(--q-parch-2) 0%, color-mix(in srgb, var(--q-gold) 20%, transparent) 100%)">
         <div class="q-slide-inner">
-            <div class="q-slide-deco" aria-hidden="true">الشَّهَادَة</div>
+            <div class="q-slide-deco" aria-hidden="true">الْإِسْلَام</div>
             <div class="q-slide-content">
-                <p class="q-eyebrow">Certificates</p>
-                <h1 class="q-slide-title">Earn a Certificate with Every Course</h1>
-                <p class="q-slide-desc">Complete a course and receive a verified certificate to share with your community.</p>
+                <p class="q-eyebrow">Start Today</p>
+                <h1 class="q-slide-title">Authentic Islamic Education — Anytime, Anywhere</h1>
+                <p class="q-slide-desc">Video lessons, PDF books, and live classes taught by verified scholars at affordable PKR pricing.</p>
                 <div class="q-slide-actions">
                     <a href="{{ route('pricing') }}" class="q-btn q-btn-primary">Subscribe Now</a>
+                    <a href="{{ route('courses.index') }}" class="q-btn q-btn-outline">Browse Courses</a>
                 </div>
             </div>
         </div>
@@ -247,6 +250,30 @@
 
 </section>
 
+
+{{-- ══ SECTION 1b — Meet the Scholar ══ --}}
+<section aria-labelledby="scholar-heading" style="border-bottom:1.5px solid var(--q-border)">
+    <div class="q-scholar-grid" style="max-width:900px;margin:0 auto;padding:3rem 1.5rem;display:grid;grid-template-columns:200px 1fr;gap:2.5rem;align-items:center">
+
+        <div style="text-align:center">
+            <img src="{{ asset('images/scholar.jpeg') }}"
+                 alt="Scholar"
+                 style="width:160px;height:160px;border-radius:50%;object-fit:cover;
+                        border:3px solid var(--q-green);box-shadow:0 4px 24px rgba(0,0,0,.12)">
+        </div>
+
+        <div>
+            <p style="font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--q-green);margin-bottom:.4rem">Your Teacher</p>
+            <h2 id="scholar-heading" style="font-family:var(--q-font-serif);font-size:1.6rem;color:var(--q-ink);margin-bottom:.3rem">Ustadh / Scholar Name</h2>
+            <p style="font-size:.85rem;color:var(--q-green);font-weight:600;margin-bottom:.85rem">Dars-e-Nizami Graduate · Islamic Studies</p>
+            <p style="font-size:.9rem;color:var(--q-ink-2);line-height:1.8;max-width:48ch">
+                A qualified Islamic scholar with expertise in Quran recitation, Tajweed, and classical Islamic sciences.
+                Teaching students of all levels through structured video courses and live one-on-one sessions.
+            </p>
+        </div>
+
+    </div>
+</section>
 
 {{-- ══ SECTION 2 — Why Choose Us ══ --}}
 <section class="q-section-alt" aria-label="Why choose us">
@@ -367,7 +394,7 @@
             <div class="q-card" style="text-align:center;padding:1.75rem 1.25rem">
                 <div style="font-family:var(--q-font-serif);font-size:2.4rem;color:var(--q-green);opacity:.25;margin-bottom:.5rem">03</div>
                 <h3 style="font-family:var(--q-font-serif);font-size:1rem;color:var(--q-ink);margin-bottom:.5rem">Access Everything</h3>
-                <p style="font-size:.85rem;color:var(--q-muted);line-height:1.7">Once approved, all video courses, PDF books, and certificates are yours.</p>
+                <p style="font-size:.85rem;color:var(--q-muted);line-height:1.7">Once approved, all video courses and PDF books are yours.</p>
             </div>
 
         </div>

@@ -20,7 +20,7 @@
             <input class="q-input @error('name') is-invalid @enderror"
                    type="text" id="name" name="name"
                    value="{{ old('name') }}"
-                   autofocus placeholder="e.g. Quran Studies">
+                   autofocus placeholder="e.g. Quran Studies" required>
             @error('name')<span class="q-error">{{ $message }}</span>@enderror
             <span class="q-help-text">Slug is generated automatically from the name.</span>
         </div>

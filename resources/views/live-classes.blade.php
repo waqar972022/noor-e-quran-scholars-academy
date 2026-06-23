@@ -13,16 +13,16 @@
 @push('styles')
 <style>
 .q-lc-hero {
-    background: linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%);
+    background: linear-gradient(135deg, var(--q-parch-2) 0%, var(--q-parch-3) 100%);
     padding: 3.5rem 1.5rem;
     text-align: center;
-    color: var(--q-parch);
+    color: var(--q-ink);
 }
 .q-lc-hero h1 {
     font-family: var(--q-font-serif);
     font-size: clamp(1.8rem, 4vw, 2.8rem);
     margin-bottom: .6rem;
-    color: var(--q-parch);
+    color: var(--q-ink);
 }
 .q-lc-hero p {
     font-size: 1rem;
@@ -33,9 +33,9 @@
 }
 .q-lc-badge {
     display: inline-block;
-    background: rgba(245,240,228,.15);
-    border: 1px solid rgba(245,240,228,.25);
-    color: var(--q-parch);
+    background: color-mix(in srgb, var(--q-green) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--q-green) 30%, transparent);
+    color: var(--q-ink);
     border-radius: 999px;
     padding: .35rem 1rem;
     font-size: .82rem;
@@ -105,7 +105,7 @@
     align-items: center;
     gap: .75rem;
     padding: .42rem 0;
-    border-bottom: 1px solid rgba(0,0,0,.06);
+    border-bottom: 1px solid var(--q-border);
     line-height: 1.45;
 }
 .q-teach-list li:last-child { border-bottom: none; }
@@ -182,7 +182,7 @@
     background: var(--q-parch-2);
 }
 .q-pricing-table tr:last-child td { border-bottom: none; }
-.q-pricing-table tr:hover td { background: var(--q-parch-3, #ede8d9); }
+.q-pricing-table tr:hover td { background: var(--q-parch-3); }
 .q-pricing-table .q-price-highlight {
     font-weight: 700;
     color: var(--q-green);

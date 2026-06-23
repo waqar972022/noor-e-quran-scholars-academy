@@ -19,6 +19,8 @@
 /bootstrap/cache/*.php
 /node_modules
 /public/build
+/public/payment-screenshots
+/public/course-files
 /public/fonts-manifest.dev.json
 /public/hot
 /public/storage

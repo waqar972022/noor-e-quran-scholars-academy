@@ -31,9 +31,11 @@
     body {
         margin: 0;
         font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        background: radial-gradient(circle at top, rgba(15, 118, 110, 0.12), transparent 35%),
-            linear-gradient(180deg, #ffffff 0%, #f8f4ee 100%);
-        color: var(--text);
+        background:
+            radial-gradient(ellipse at top left, rgba(201, 168, 76, 0.07) 0%, transparent 45%),
+            radial-gradient(ellipse at bottom right, rgba(45, 106, 79, 0.09) 0%, transparent 45%),
+            var(--q-parch);
+        color: var(--q-ink);
     }
 
     a {

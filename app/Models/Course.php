@@ -20,6 +20,7 @@ class Course extends Model
         'long_description',
         'thumbnail',
         'is_premium',
+        'is_free',
         'status',
     ];
 
@@ -27,6 +28,7 @@ class Course extends Model
     {
         return [
             'is_premium' => 'boolean',
+            'is_free'    => 'boolean',
         ];
     }
 

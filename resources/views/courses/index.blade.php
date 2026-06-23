@@ -41,7 +41,8 @@
 }
 
 .q-crd {
-    display: block;
+    display: flex;
+    flex-direction: column;
     padding: 0;
     overflow: hidden;
     text-decoration: none;
@@ -49,7 +50,7 @@
     transition: box-shadow .2s, transform .18s;
 }
 .q-crd:hover {
-    box-shadow: 0 8px 36px rgba(28,20,8,.13);
+    box-shadow: var(--q-shadow-card);
     transform: translateY(-2px);
 }
 .q-crd-thumb {
@@ -59,14 +60,14 @@
     justify-content: center;
     font-family: var(--q-font-serif);
     font-size: 3rem;
-    color: rgba(27,67,50,.2);
+    color: color-mix(in srgb, var(--q-green) 20%, transparent);
 }
 .q-crd-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.q-crd-thumb.c0 { background: #d4e8c4; }
-.q-crd-thumb.c1 { background: #e8d9b8; }
-.q-crd-thumb.c2 { background: #c8dfc8; }
-.q-crd-thumb.c3 { background: #e0d4b8; }
-.q-crd-body { padding: 1rem 1.15rem 1.25rem; }
+.q-crd-thumb.c0 { background: color-mix(in srgb, var(--q-green) 20%, transparent); }
+.q-crd-thumb.c1 { background: var(--q-parch-3); }
+.q-crd-thumb.c2 { background: color-mix(in srgb, var(--q-green) 15%, transparent); }
+.q-crd-thumb.c3 { background: var(--q-parch-4); }
+.q-crd-body { padding: 1rem 1.15rem 1.25rem; flex: 1; display: flex; flex-direction: column; }
 .q-crd-title {
     font-family: var(--q-font-prose);
     font-size: .95rem;
@@ -90,6 +91,7 @@
     align-items: center;
     padding-top: .8rem;
     border-top: 1px solid var(--q-border);
+    margin-top: auto;
 }
 
 .q-pagination {
@@ -214,7 +216,11 @@
                             <p class="q-crd-desc">{{ $course->short_description }}</p>
                         @endif
                         <div class="q-crd-footer">
-                            <span class="q-badge q-badge-gold">Premium</span>
+                            @if ($course->is_free)
+                                <span class="q-badge" style="background:color-mix(in srgb,var(--q-green) 15%,transparent);color:var(--q-green);border:1px solid color-mix(in srgb,var(--q-green) 30%,transparent)">Free</span>
+                            @else
+                                <span class="q-badge q-badge-gold">Premium</span>
+                            @endif
                             <span class="q-btn q-btn-primary q-btn-sm">Enroll</span>
                         </div>
                     </div>

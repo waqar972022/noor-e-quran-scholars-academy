@@ -26,13 +26,13 @@
     border-radius: var(--q-radius-lg);
     overflow: hidden;
     border: 1.5px solid var(--q-border);
-    background: #e8d9b8;
+    background: var(--q-parch-2);
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: var(--q-font-serif);
     font-size: 5rem;
-    color: rgba(27,67,50,.18);
+    color: color-mix(in srgb, var(--q-green) 18%, transparent);
 }
 .q-course-hero-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .q-course-hero-meta { display: flex; flex-direction: column; gap: .6rem; }
@@ -87,6 +87,23 @@
 }
 .q-lesson-title { flex: 1; }
 .q-lesson-lock { font-size: .75rem; color: var(--q-muted); white-space: nowrap; opacity: .7; }
+.q-lesson-item.unlocked { border-color: color-mix(in srgb, var(--q-green) 20%, transparent); }
+.q-lesson-item.unlocked a.q-lesson-title,
+.q-pdf-item.unlocked a.q-lesson-title {
+    color: var(--q-ink);
+    font-weight: 500;
+    text-decoration: none;
+}
+.q-lesson-item.unlocked a.q-lesson-title:hover,
+.q-pdf-item.unlocked a.q-lesson-title:hover { color: var(--q-green); }
+.q-lesson-play { font-size: .75rem; color: var(--q-green); font-weight: 600; white-space: nowrap; }
+.q-access-panel {
+    border-radius: var(--q-radius-lg);
+    border: 1.5px solid color-mix(in srgb, var(--q-green) 25%, transparent);
+    border-top: 3px solid var(--q-green);
+    padding: 1.1rem 1.25rem;
+    background: var(--q-parch-2);
+}
 
 .q-pdf-item {
     display: flex;
@@ -94,7 +111,7 @@
     gap: .85rem;
     padding: .75rem 1rem;
     border-radius: var(--q-radius);
-    background: rgba(154,107,31,.06);
+    background: color-mix(in srgb, var(--q-gold) 8%, transparent);
     border: 1.5px solid var(--q-border);
     font-size: .88rem;
     color: var(--q-ink-2);
@@ -176,7 +193,11 @@
                 @if ($course->category)
                     <span class="q-badge q-badge-green">{{ $course->category->name }}</span>
                 @endif
-                <span class="q-badge q-badge-gold">Premium</span>
+                @if ($course->is_free)
+                    <span class="q-badge" style="background:color-mix(in srgb,var(--q-green) 15%,transparent);color:var(--q-green);border:1px solid color-mix(in srgb,var(--q-green) 30%,transparent)">Free</span>
+                @else
+                    <span class="q-badge q-badge-gold">Premium</span>
+                @endif
             </div>
 
             <h1 class="q-course-hero-title">{{ $course->title }}</h1>
@@ -217,20 +238,43 @@
 
                 <ul class="q-lesson-list">
                     @foreach ($course->videos as $video)
-                        <li class="q-lesson-item">
-                            <span class="q-lesson-num">{{ $loop->iteration }}</span>
-                            <span aria-hidden="true">▶</span>
-                            <span class="q-lesson-title">{{ $video->video_title }}</span>
-                            <span class="q-lesson-lock">🔒 Subscribe to unlock</span>
-                        </li>
+                        @php $done = $isSubscribed && in_array($video->id, $completedVideoIds); @endphp
+                        @if ($isSubscribed)
+                            <li class="q-lesson-item unlocked"
+                                style="{{ $done ? 'border-color:color-mix(in srgb, var(--q-green) 25%, transparent);background:color-mix(in srgb, var(--q-green) 6%, transparent)' : '' }}">
+                                <span class="q-lesson-num" style="{{ $done ? 'color:var(--q-green)' : '' }}">
+                                    {{ $done ? '&#x2713;' : $loop->iteration }}
+                                </span>
+                                <span aria-hidden="true" style="{{ $done ? 'opacity:.4' : '' }}">&#x25B6;</span>
+                                <a href="{{ route('content.video', [$course->slug, $video->id]) }}"
+                                   class="q-lesson-title">{{ $video->video_title }}</a>
+                                <span class="q-lesson-play">{{ $done ? 'Done' : '&#x25B6; Play' }}</span>
+                            </li>
+                        @else
+                            <li class="q-lesson-item">
+                                <span class="q-lesson-num">{{ $loop->iteration }}</span>
+                                <span aria-hidden="true">&#x25B6;</span>
+                                <span class="q-lesson-title">{{ $video->video_title }}</span>
+                                <span class="q-lesson-lock">Subscribe to unlock</span>
+                            </li>
+                        @endif
                     @endforeach
 
                     @foreach ($course->files as $file)
-                        <li class="q-pdf-item">
-                            <span aria-hidden="true">📄</span>
-                            <span class="q-lesson-title">{{ $file->file_title ?? 'PDF Course Book' }}</span>
-                            <span class="q-lesson-lock">🔒 Subscribe to unlock</span>
-                        </li>
+                        @if ($isSubscribed)
+                            <li class="q-pdf-item unlocked">
+                                <span aria-hidden="true">📄</span>
+                                <a href="{{ route('content.pdf', [$course->slug, $file->id]) }}"
+                                   class="q-lesson-title">{{ $file->file_title ?? 'PDF Course Book' }}</a>
+                                <span class="q-lesson-play">📄 Open</span>
+                            </li>
+                        @else
+                            <li class="q-pdf-item">
+                                <span aria-hidden="true">📄</span>
+                                <span class="q-lesson-title">{{ $file->file_title ?? 'PDF Course Book' }}</span>
+                                <span class="q-lesson-lock">🔒 Subscribe to unlock</span>
+                            </li>
+                        @endif
                     @endforeach
                 </ul>
 
@@ -258,27 +302,46 @@
                 @endif
                 <li class="q-included-item">
                     <span class="q-included-check" aria-hidden="true">✓</span>
-                    Completion certificate
-                </li>
-                <li class="q-included-item">
-                    <span class="q-included-check" aria-hidden="true">✓</span>
                     Lifetime access
                 </li>
             </ul>
         </div>
 
-        <div class="q-subscribe-panel">
-            <h3>Subscribe to Access All Courses</h3>
-            <p>Plans start from PKR 500. Every plan unlocks all courses.</p>
-            <a href="{{ route('pricing') }}" class="q-btn q-btn-parch q-btn-full">View Pricing</a>
-            @guest
-                <a href="{{ route('register') }}"
-                   class="q-btn q-btn-full"
-                   style="margin-top:.6rem;border:1px solid rgba(245,240,228,.25);color:rgba(245,240,228,.8);background:transparent">
-                    Register Free
-                </a>
-            @endguest
-        </div>
+        @if ($isSubscribed)
+            <div class="q-access-panel">
+                <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem">
+                    <span style="color:var(--q-green);font-size:1rem;font-weight:700">&#x2713;</span>
+                    <span style="font-weight:700;color:var(--q-green);font-size:.9rem">Subscription Active</span>
+                </div>
+
+                @if ($totalVideos > 0)
+                    <div style="margin-bottom:.85rem">
+                        <div style="display:flex;justify-content:space-between;font-size:.75rem;color:var(--q-muted);margin-bottom:.35rem">
+                            <span>Progress</span>
+                            <span>{{ $completedCount }} / {{ $totalVideos }} lessons</span>
+                        </div>
+                        <div style="height:6px;background:var(--q-parch-3);border-radius:3px;overflow:hidden">
+                            <div style="height:100%;background:var(--q-green);border-radius:3px;width:{{ $totalVideos > 0 ? round($completedCount / $totalVideos * 100) : 0 }}%"></div>
+                        </div>
+                    </div>
+                @endif
+
+            </div>
+        @elseif (! $course->is_free)
+            <div class="q-subscribe-panel">
+                <h3>Subscribe to Access All Courses</h3>
+                @php $minPrice = \App\Models\SubscriptionPlan::where('status','active')->min('price'); @endphp
+                <p>Plans start from {{ $minPrice ? pkr($minPrice) : 'PKR —' }}. Every plan unlocks all courses.</p>
+                <a href="{{ route('pricing') }}" class="q-btn q-btn-parch q-btn-full">View Pricing</a>
+                @guest
+                    <a href="{{ route('register') }}"
+                       class="q-btn q-btn-full"
+                       style="margin-top:.6rem;border:1px solid color-mix(in srgb, var(--q-ink) 30%, transparent);color:color-mix(in srgb, var(--q-ink) 80%, transparent);background:transparent">
+                        Register Free
+                    </a>
+                @endguest
+            </div>
+        @endif
 
     </aside>
 

@@ -23,7 +23,7 @@
             <label class="q-label" for="title">Title</label>
             <input class="q-input @error('title') is-invalid @enderror"
                    type="text" id="title" name="title"
-                   value="{{ old('title') }}" autofocus placeholder="Course title">
+                   value="{{ old('title') }}" autofocus placeholder="Course title" required>
             @error('title')<span class="q-error">{{ $message }}</span>@enderror
         </div>
 
@@ -31,7 +31,7 @@
             <div class="q-field">
                 <label class="q-label" for="category_id">Category</label>
                 <select class="q-input q-select @error('category_id') is-invalid @enderror"
-                        id="category_id" name="category_id">
+                        id="category_id" name="category_id" required>
                     <option value="">— Select category —</option>
                     @foreach ($categories as $cat)
                         <option value="{{ $cat->id }}" {{ old('category_id') == $cat->id ? 'selected' : '' }}>
@@ -53,10 +53,19 @@
         </div>
 
         <div class="q-field">
+            <label style="display:flex;align-items:center;gap:.6rem;cursor:pointer">
+                <input type="checkbox" name="is_free" value="1" {{ old('is_free') ? 'checked' : '' }}
+                       style="width:16px;height:16px;accent-color:var(--q-green)">
+                <span class="q-label" style="margin:0">Free Course</span>
+            </label>
+            <span class="q-help-text">Anyone can access this course without a subscription.</span>
+        </div>
+
+        <div class="q-field">
             <label class="q-label" for="short_description">Short Description</label>
             <textarea class="q-input q-textarea @error('short_description') is-invalid @enderror"
                       id="short_description" name="short_description"
-                      maxlength="500" rows="2"
+                      maxlength="500" rows="2" required
                       placeholder="One-paragraph summary shown on course cards (max 500 chars)">{{ old('short_description') }}</textarea>
             @error('short_description')<span class="q-error">{{ $message }}</span>@enderror
         </div>
@@ -64,7 +73,7 @@
         <div class="q-field">
             <label class="q-label" for="long_description">Full Description</label>
             <textarea class="q-input q-textarea @error('long_description') is-invalid @enderror"
-                      id="long_description" name="long_description"
+                      id="long_description" name="long_description" required
                       rows="6"
                       placeholder="Detailed course description, curriculum, prerequisites…">{{ old('long_description') }}</textarea>
             @error('long_description')<span class="q-error">{{ $message }}</span>@enderror
@@ -79,7 +88,7 @@
             <label class="q-label" for="thumbnail">Cover Image</label>
             <input class="q-input q-input-file @error('thumbnail') is-invalid @enderror"
                    type="file" id="thumbnail" name="thumbnail"
-                   accept=".jpg,.jpeg,.png,.webp">
+                   accept=".jpg,.jpeg,.png,.webp" required>
             @error('thumbnail')<span class="q-error">{{ $message }}</span>@enderror
             <span class="q-help-text">JPG, PNG, or WebP — max 5 MB. Minimum 400×300 px recommended.</span>
         </div>
