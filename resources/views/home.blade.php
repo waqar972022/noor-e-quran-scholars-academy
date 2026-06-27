@@ -28,8 +28,32 @@
         display: flex;
         align-items: center;
         gap: 3rem;
-        max-width: 700px;
+        max-width: 960px;
         width: 100%;
+    }
+    .q-slide-scholar {
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: .75rem;
+        margin-left: auto;
+    }
+    .q-slide-scholar-img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid var(--q-gold);
+        box-shadow: 0 0 0 6px color-mix(in srgb, var(--q-gold) 18%, transparent),
+                    0 8px 32px rgba(0,0,0,.25);
+    }
+    .q-slide-scholar-label {
+        font-size: .72rem;
+        font-weight: 700;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+        color: var(--q-gold);
     }
     .q-slide-deco {
         font-family: var(--q-font-serif);
@@ -111,6 +135,7 @@
         .q-slide-inner { justify-content: center; text-align: center; }
         .q-slide-actions { justify-content: center; }
         .q-scholar-grid { grid-template-columns: 1fr !important; text-align: center; }
+        .q-slide-scholar { display: none; }
     }
 
     /* ── Courses ─────────────────────────────────────── */
@@ -238,6 +263,10 @@
                     <a href="{{ route('courses.index') }}" class="q-btn q-btn-outline">Browse Courses</a>
                 </div>
             </div>
+            <div class="q-slide-scholar" aria-hidden="true">
+                <img src="{{ asset('images/scholar.jpeg') }}" alt="Scholar" class="q-slide-scholar-img">
+                <span class="q-slide-scholar-label">Your Teacher</span>
+            </div>
         </div>
     </div>
 
@@ -254,6 +283,10 @@
                     <a href="{{ route('pricing') }}" class="q-btn q-btn-outline">View Pricing</a>
                 </div>
             </div>
+            <div class="q-slide-scholar" aria-hidden="true">
+                <img src="{{ asset('images/scholar.jpeg') }}" alt="Scholar" class="q-slide-scholar-img">
+                <span class="q-slide-scholar-label">Your Teacher</span>
+            </div>
         </div>
     </div>
 
@@ -269,6 +302,10 @@
                     <a href="{{ route('pricing') }}" class="q-btn q-btn-primary">Subscribe Now</a>
                     <a href="{{ route('courses.index') }}" class="q-btn q-btn-outline">Browse Courses</a>
                 </div>
+            </div>
+            <div class="q-slide-scholar" aria-hidden="true">
+                <img src="{{ asset('images/scholar.jpeg') }}" alt="Scholar" class="q-slide-scholar-img">
+                <span class="q-slide-scholar-label">Your Teacher</span>
             </div>
         </div>
     </div>
