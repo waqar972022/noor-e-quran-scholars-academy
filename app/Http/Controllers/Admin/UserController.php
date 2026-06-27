@@ -30,7 +30,7 @@ class UserController extends Controller
                     ->where('end_date', '>=', today()),
             ])
             ->latest()
-            ->paginate(25)
+            ->paginate(20)
             ->withQueryString();
 
         return view('admin.users.index', compact('users', 'search'));

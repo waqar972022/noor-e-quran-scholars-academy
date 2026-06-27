@@ -7,7 +7,7 @@
     /* ── Hero Slider ─────────────────────────────────── */
     .q-slider {
         position: relative;
-        height: 360px;
+        height: calc(100vh - 58px);
         overflow: hidden;
         border-bottom: 1.5px solid var(--q-border);
     }
@@ -186,6 +186,22 @@
     .q-reveal[data-delay="4"] { transition-delay: .40s; }
     .q-reveal[data-delay="5"] { transition-delay: .50s; }
 
+    /* ── Full-page scroll snap ───────────────────────── */
+    html { scroll-snap-type: y mandatory; }
+    section {
+        scroll-snap-align: start;
+        scroll-margin-top: 58px;
+        min-height: calc(100vh - 58px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .q-slider {
+        scroll-margin-top: 0;
+        justify-content: flex-start;
+    }
+    footer { scroll-snap-align: start; scroll-margin-top: 58px; }
+
     /* ── CTA Band ────────────────────────────────────── */
     .q-cta-band {
         background: var(--q-green);
@@ -275,7 +291,7 @@
 
 {{-- ══ SECTION 1b — Meet the Scholar ══ --}}
 <section aria-labelledby="scholar-heading" style="border-bottom:1.5px solid var(--q-border)">
-    <div class="q-scholar-grid q-reveal" style="max-width:900px;margin:0 auto;padding:3rem 1.5rem;display:grid;grid-template-columns:200px 1fr;gap:2.5rem;align-items:center">
+    <div class="q-scholar-grid q-reveal" style="max-width:900px;margin:0 auto;padding:2rem 1.5rem;display:grid;grid-template-columns:200px 1fr;gap:2.5rem;align-items:center">
 
         <div style="text-align:center">
             <img src="{{ asset('images/scholar.jpeg') }}"

@@ -61,7 +61,7 @@ class DashboardController extends Controller
         $payments = $user->paymentRequests()
             ->with('plan')
             ->latest()
-            ->paginate(15);
+            ->paginate(20);
 
         return view('user.payments', compact('payments'));
     }
