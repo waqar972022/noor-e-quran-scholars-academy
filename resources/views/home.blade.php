@@ -31,29 +31,39 @@
         max-width: 960px;
         width: 100%;
     }
-    .q-slide-scholar {
+    .q-enrol-card {
         flex-shrink: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: .75rem;
         margin-left: auto;
+        background: color-mix(in srgb, var(--q-hero-text) 6%, transparent);
+        border: 1.5px solid color-mix(in srgb, var(--q-gold) 35%, transparent);
+        border-radius: var(--q-radius-lg);
+        padding: 1.4rem 1.6rem;
+        min-width: 210px;
+        backdrop-filter: blur(6px);
     }
-    .q-slide-scholar-img {
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 3px solid var(--q-gold);
-        box-shadow: 0 0 0 6px color-mix(in srgb, var(--q-gold) 18%, transparent),
-                    0 8px 32px rgba(0,0,0,.25);
-    }
-    .q-slide-scholar-label {
-        font-size: .72rem;
+    .q-enrol-card-title {
+        font-size: .7rem;
         font-weight: 700;
-        letter-spacing: .1em;
+        letter-spacing: .12em;
         text-transform: uppercase;
         color: var(--q-gold);
+        margin-bottom: 1rem;
+    }
+    .q-enrol-card-item {
+        display: flex;
+        align-items: center;
+        gap: .55rem;
+        font-size: .82rem;
+        color: var(--q-hero-text);
+        margin-bottom: .6rem;
+        line-height: 1.4;
+    }
+    .q-enrol-card-item:last-of-type { margin-bottom: 1.1rem; }
+    .q-enrol-card-dot {
+        width: 6px; height: 6px;
+        border-radius: 50%;
+        background: var(--q-gold);
+        flex-shrink: 0;
     }
     .q-slide-deco {
         font-family: var(--q-font-serif);
@@ -135,7 +145,7 @@
         .q-slide-inner { justify-content: center; text-align: center; }
         .q-slide-actions { justify-content: center; }
         .q-scholar-grid { grid-template-columns: 1fr !important; text-align: center; }
-        .q-slide-scholar { display: none; }
+        .q-enrol-card { display: none; }
     }
 
     /* ── Courses ─────────────────────────────────────── */
@@ -263,9 +273,13 @@
                     <a href="{{ route('courses.index') }}" class="q-btn q-btn-outline">Browse Courses</a>
                 </div>
             </div>
-            <div class="q-slide-scholar" aria-hidden="true">
-                <img src="{{ asset('images/scholar.jpeg') }}" alt="Scholar" class="q-slide-scholar-img">
-                <span class="q-slide-scholar-label">Your Teacher</span>
+            <div class="q-enrol-card" aria-hidden="true">
+                <p class="q-enrol-card-title">Now Enrolling</p>
+                <div class="q-enrol-card-item"><span class="q-enrol-card-dot"></span>3-Day Free Trial</div>
+                <div class="q-enrol-card-item"><span class="q-enrol-card-dot"></span>Flexible Timings</div>
+                <div class="q-enrol-card-item"><span class="q-enrol-card-dot"></span>Affordable PKR Pricing</div>
+                <div class="q-enrol-card-item"><span class="q-enrol-card-dot"></span>WhatsApp Support</div>
+                <a href="{{ route('register') }}" class="q-btn q-btn-primary q-btn-sm" style="width:100%;text-align:center">Start Free Trial</a>
             </div>
         </div>
     </div>
@@ -283,9 +297,13 @@
                     <a href="{{ route('pricing') }}" class="q-btn q-btn-outline">View Pricing</a>
                 </div>
             </div>
-            <div class="q-slide-scholar" aria-hidden="true">
-                <img src="{{ asset('images/scholar.jpeg') }}" alt="Scholar" class="q-slide-scholar-img">
-                <span class="q-slide-scholar-label">Your Teacher</span>
+            <div class="q-enrol-card" aria-hidden="true">
+                <p class="q-enrol-card-title">Now Enrolling</p>
+                <div class="q-enrol-card-item"><span class="q-enrol-card-dot"></span>3-Day Free Trial</div>
+                <div class="q-enrol-card-item"><span class="q-enrol-card-dot"></span>Flexible Timings</div>
+                <div class="q-enrol-card-item"><span class="q-enrol-card-dot"></span>Affordable PKR Pricing</div>
+                <div class="q-enrol-card-item"><span class="q-enrol-card-dot"></span>WhatsApp Support</div>
+                <a href="{{ route('register') }}" class="q-btn q-btn-primary q-btn-sm" style="width:100%;text-align:center">Start Free Trial</a>
             </div>
         </div>
     </div>
@@ -303,9 +321,13 @@
                     <a href="{{ route('courses.index') }}" class="q-btn q-btn-outline">Browse Courses</a>
                 </div>
             </div>
-            <div class="q-slide-scholar" aria-hidden="true">
-                <img src="{{ asset('images/scholar.jpeg') }}" alt="Scholar" class="q-slide-scholar-img">
-                <span class="q-slide-scholar-label">Your Teacher</span>
+            <div class="q-enrol-card" aria-hidden="true">
+                <p class="q-enrol-card-title">Now Enrolling</p>
+                <div class="q-enrol-card-item"><span class="q-enrol-card-dot"></span>3-Day Free Trial</div>
+                <div class="q-enrol-card-item"><span class="q-enrol-card-dot"></span>Flexible Timings</div>
+                <div class="q-enrol-card-item"><span class="q-enrol-card-dot"></span>Affordable PKR Pricing</div>
+                <div class="q-enrol-card-item"><span class="q-enrol-card-dot"></span>WhatsApp Support</div>
+                <a href="{{ route('register') }}" class="q-btn q-btn-primary q-btn-sm" style="width:100%;text-align:center">Start Free Trial</a>
             </div>
         </div>
     </div>
@@ -320,6 +342,31 @@
     </div>
 
 </section>
+
+@if($stats->isNotEmpty())
+<div style="border-bottom:1.5px solid var(--q-border);background:var(--q-section-alt,var(--q-parch))">
+    <div style="max-width:960px;margin:0 auto;padding:.9rem 1.5rem;display:flex;flex-wrap:wrap;gap:1.5rem 2.5rem;align-items:center;justify-content:center">
+        @if($stats->has('courses'))
+            <div class="q-reveal" style="display:flex;align-items:center;gap:.6rem">
+                <span style="font-family:var(--q-font-serif);font-size:1.5rem;font-weight:700;color:var(--q-green)">{{ $stats['courses'] }}+</span>
+                <span style="font-size:.8rem;color:var(--q-muted);line-height:1.3">Video<br>Courses</span>
+            </div>
+        @endif
+        @if($stats->has('students'))
+            <div class="q-reveal" data-delay="1" style="display:flex;align-items:center;gap:.6rem">
+                <span style="font-family:var(--q-font-serif);font-size:1.5rem;font-weight:700;color:var(--q-green)">{{ $stats['students'] }}+</span>
+                <span style="font-size:.8rem;color:var(--q-muted);line-height:1.3">Active<br>Students</span>
+            </div>
+        @endif
+        @if($stats->has('videos'))
+            <div class="q-reveal" data-delay="2" style="display:flex;align-items:center;gap:.6rem">
+                <span style="font-family:var(--q-font-serif);font-size:1.5rem;font-weight:700;color:var(--q-green)">{{ $stats['videos'] }}+</span>
+                <span style="font-size:.8rem;color:var(--q-muted);line-height:1.3">Video<br>Lessons</span>
+            </div>
+        @endif
+    </div>
+</div>
+@endif
 
 
 {{-- ══ SECTION 1b — Meet the Scholar ══ --}}
@@ -349,36 +396,24 @@
 {{-- ══ SECTION 2 — Why Choose Us ══ --}}
 <section class="q-section-alt" aria-label="Why choose us">
     <div style="max-width:1100px;margin:0 auto;padding:2.5rem 1.5rem">
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.25rem">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem">
 
-            <div class="q-reveal" data-delay="1" style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:.5rem;padding:.75rem">
-                <span style="font-size:1.8rem">🎓</span>
-                <strong style="font-size:.9rem;color:var(--q-ink)">Qualified Scholars</strong>
-                <p style="font-size:.78rem;color:var(--q-muted);line-height:1.55">Verified Islamic scholars with formal Dars-e-Nizami education</p>
+            <div class="q-card q-reveal" data-delay="1" style="padding:1.5rem 1.6rem">
+                <div style="width:8px;height:8px;border-radius:50%;background:var(--q-green);margin-bottom:1rem"></div>
+                <strong style="font-size:.95rem;color:var(--q-ink);display:block;margin-bottom:.4rem">Taught by Qualified Scholars</strong>
+                <p style="font-size:.82rem;color:var(--q-muted);line-height:1.65;margin:0">Every instructor is a verified Dars-e-Nizami graduate. You learn from authentic scholarly chains, not self-taught content.</p>
             </div>
 
-            <div class="q-reveal" data-delay="2" style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:.5rem;padding:.75rem">
-                <span style="font-size:1.8rem">🆓</span>
-                <strong style="font-size:.9rem;color:var(--q-ink)">3-Day Free Trial</strong>
-                <p style="font-size:.78rem;color:var(--q-muted);line-height:1.55">Try live classes for 3 days before committing to any plan</p>
+            <div class="q-card q-reveal" data-delay="2" style="padding:1.5rem 1.6rem">
+                <div style="width:8px;height:8px;border-radius:50%;background:var(--q-gold);margin-bottom:1rem"></div>
+                <strong style="font-size:.95rem;color:var(--q-ink);display:block;margin-bottom:.4rem">Rooted in Classical Sources</strong>
+                <p style="font-size:.82rem;color:var(--q-muted);line-height:1.65;margin:0">Curriculum drawn from the Qur'an, Hadith, and classical texts — structured for all levels from beginner to advanced.</p>
             </div>
 
-            <div class="q-reveal" data-delay="3" style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:.5rem;padding:.75rem">
-                <span style="font-size:1.8rem">🕐</span>
-                <strong style="font-size:.9rem;color:var(--q-ink)">Flexible Timings</strong>
-                <p style="font-size:.78rem;color:var(--q-muted);line-height:1.55">Schedule classes at times that suit you and your family</p>
-            </div>
-
-            <div class="q-reveal" data-delay="4" style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:.5rem;padding:.75rem">
-                <span style="font-size:1.8rem">💬</span>
-                <strong style="font-size:.9rem;color:var(--q-ink)">WhatsApp Support</strong>
-                <p style="font-size:.78rem;color:var(--q-muted);line-height:1.55">Direct access to your teacher and admin via WhatsApp</p>
-            </div>
-
-            <div class="q-reveal" data-delay="5" style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:.5rem;padding:.75rem">
-                <span style="font-size:1.8rem">📋</span>
-                <strong style="font-size:.9rem;color:var(--q-ink)">Parent Reports</strong>
-                <p style="font-size:.78rem;color:var(--q-muted);line-height:1.55">Regular progress reports shared with parents on WhatsApp</p>
+            <div class="q-card q-reveal" data-delay="3" style="padding:1.5rem 1.6rem">
+                <div style="width:8px;height:8px;border-radius:50%;background:var(--q-green);margin-bottom:1rem"></div>
+                <strong style="font-size:.95rem;color:var(--q-ink);display:block;margin-bottom:.4rem">Flexible &amp; Family-Friendly</strong>
+                <p style="font-size:.82rem;color:var(--q-muted);line-height:1.65;margin:0">Live classes at times that suit your schedule. PKR pricing, WhatsApp support, and progress reports for parents.</p>
             </div>
 
         </div>
@@ -420,8 +455,20 @@
                             <span class="q-badge q-badge-green">{{ $course->category->name }}</span>
                         @endif
                         <h3 class="q-course-title">{{ $course->title }}</h3>
-                        @if ($course->short_description)
-                            <p class="q-course-instructor">{{ Str::limit($course->short_description, 70) }}</p>
+                        @if ($course->owner)
+                            <p class="q-course-instructor">by {{ $course->owner->name }}</p>
+                        @elseif ($course->short_description)
+                            <p class="q-course-instructor">{{ Str::limit($course->short_description, 60) }}</p>
+                        @endif
+                        @if ($course->videos_count > 0 || $course->files_count > 0)
+                            <div style="display:flex;gap:.75rem;margin-bottom:.75rem;flex-wrap:wrap">
+                                @if ($course->videos_count > 0)
+                                    <span style="font-size:.75rem;color:var(--q-muted)">▶ {{ $course->videos_count }} {{ Str::plural('lesson', $course->videos_count) }}</span>
+                                @endif
+                                @if ($course->files_count > 0)
+                                    <span style="font-size:.75rem;color:var(--q-muted)">📄 {{ $course->files_count }} {{ Str::plural('file', $course->files_count) }}</span>
+                                @endif
+                            </div>
                         @endif
                         <div class="q-course-footer">
                             <span class="q-badge q-badge-gold">Premium</span>
@@ -473,7 +520,46 @@
 </section>
 
 
-{{-- ══ SECTION 5 — CTA Band ══ --}}
+{{-- ══ SECTION 5 — Pricing ══ --}}
+@if($plans->isNotEmpty())
+<section aria-labelledby="pricing-heading">
+    <div class="q-courses-wrap" style="padding-top:3rem;padding-bottom:3rem">
+        <div class="q-reveal" style="text-align:center;margin-bottom:2.5rem">
+            <p class="q-eyebrow">Choose Your Plan</p>
+            <h2 id="pricing-heading" class="q-section-title">Simple, Transparent Pricing</h2>
+            <p style="font-size:.88rem;color:var(--q-muted);margin-top:.5rem">All plans include full access to every course and PDF book.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;max-width:800px;margin:0 auto">
+            @foreach($plans as $plan)
+                @php $isFirst = $loop->first; @endphp
+                <div class="q-card q-reveal" data-delay="{{ $loop->index + 1 }}"
+                     style="padding:2rem 1.5rem;text-align:center;position:relative;
+                            {{ $isFirst ? 'border-color:var(--q-green);' : '' }}">
+                    @if($isFirst)
+                        <span class="q-badge q-badge-green" style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);white-space:nowrap">Most Popular</span>
+                    @endif
+                    <p style="font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--q-muted);margin-bottom:.5rem">{{ $plan->name }}</p>
+                    <div style="font-family:var(--q-font-serif);font-size:2.2rem;font-weight:700;color:var(--q-ink);line-height:1">
+                        PKR {{ number_format($plan->price, 0) }}
+                    </div>
+                    <p style="font-size:.78rem;color:var(--q-muted);margin:.4rem 0 1.5rem">
+                        per {{ $plan->duration_days }} {{ Str::plural('day', $plan->duration_days) }}
+                    </p>
+                    <a href="{{ route('register') }}" class="q-btn q-btn-sm {{ $isFirst ? 'q-btn-primary' : 'q-btn-outline' }}" style="width:100%;text-align:center">
+                        Get Started
+                    </a>
+                </div>
+            @endforeach
+        </div>
+        <p class="q-reveal" style="text-align:center;margin-top:1.5rem;font-size:.8rem;color:var(--q-muted)">
+            Payment via JazzCash · Manually reviewed &amp; approved
+        </p>
+    </div>
+</section>
+@endif
+
+
+{{-- ══ SECTION 6 — CTA Band ══ --}}
 <section class="q-cta-band" aria-labelledby="cta-heading">
     <h2 id="cta-heading" class="q-reveal">Begin your journey of sacred knowledge</h2>
     <p class="q-reveal" data-delay="1">Join thousands of learners studying the Qur'an and Sunnah.</p>
