@@ -187,18 +187,13 @@
     .q-reveal[data-delay="5"] { transition-delay: .50s; }
 
     /* ── Full-page scroll snap ───────────────────────── */
-    html { scroll-snap-type: y mandatory; }
+    html { scroll-snap-type: y proximity; }
     section {
         scroll-snap-align: start;
         scroll-margin-top: 58px;
-        min-height: calc(100vh - 58px);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
     }
     .q-slider {
         scroll-margin-top: 0;
-        justify-content: flex-start;
     }
     footer { scroll-snap-align: start; scroll-margin-top: 58px; }
 
