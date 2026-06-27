@@ -233,6 +233,38 @@
     }
     footer { scroll-snap-align: start; scroll-margin-top: 58px; }
 
+    /* ── Pricing (home) ─────────────────────────────── */
+    .q-plan-grid-home {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    @media (min-width: 540px) { .q-plan-grid-home { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 860px) { .q-plan-grid-home { grid-template-columns: repeat(3, 1fr); } }
+
+    .q-plan-card-home {
+        display: flex;
+        flex-direction: column;
+        border: 1.5px solid var(--q-border);
+        border-radius: var(--q-radius-xl);
+        background: var(--q-parch-2);
+        box-shadow: var(--q-shadow-card);
+        position: relative;
+        margin-top: 1rem;
+        transition: box-shadow .2s, transform .18s;
+        overflow: visible;
+    }
+    .q-plan-card-home:hover {
+        box-shadow: var(--q-shadow-panel);
+        transform: translateY(-3px);
+    }
+    .q-plan-card-home--popular {
+        border-color: var(--q-green);
+        box-shadow: 0 0 0 3px rgba(27,67,50,.1), var(--q-shadow-panel);
+    }
+
     /* ── CTA Band ────────────────────────────────────── */
     .q-cta-band {
         background: var(--q-green);
@@ -524,36 +556,51 @@
 @if($plans->isNotEmpty())
 <section aria-labelledby="pricing-heading">
     <div class="q-courses-wrap" style="padding-top:3rem;padding-bottom:3rem">
+
         <div class="q-reveal" style="text-align:center;margin-bottom:2.5rem">
-            <p class="q-eyebrow">Choose Your Plan</p>
+            <p class="q-eyebrow">Plans &amp; Pricing</p>
             <h2 id="pricing-heading" class="q-section-title">Simple, Transparent Pricing</h2>
-            <p style="font-size:.88rem;color:var(--q-muted);margin-top:.5rem">All plans include full access to every course and PDF book.</p>
+            <p style="font-size:.88rem;color:var(--q-muted);margin-top:.5rem">Every plan unlocks all video courses and PDF books.</p>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;max-width:800px;margin:0 auto">
+
+        <div class="q-plan-grid-home">
             @foreach($plans as $plan)
-                @php $isFirst = $loop->first; @endphp
-                <div class="q-card q-reveal" data-delay="{{ $loop->index + 1 }}"
-                     style="padding:2rem 1.5rem;text-align:center;position:relative;
-                            {{ $isFirst ? 'border-color:var(--q-green);' : '' }}">
-                    @if($isFirst)
-                        <span class="q-badge q-badge-green" style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);white-space:nowrap">Most Popular</span>
+                @php $isPopular = $loop->count > 1 && $loop->iteration === (int) ceil($loop->count / 2); @endphp
+                <div class="q-plan-card-home {{ $isPopular ? 'q-plan-card-home--popular' : '' }} q-reveal" data-delay="{{ $loop->index + 1 }}">
+
+                    @if($isPopular)
+                        <div class="q-plan-popular-badge">Most Popular</div>
                     @endif
-                    <p style="font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--q-muted);margin-bottom:.5rem">{{ $plan->name }}</p>
-                    <div style="font-family:var(--q-font-serif);font-size:2.2rem;font-weight:700;color:var(--q-ink);line-height:1">
-                        PKR {{ number_format($plan->price, 0) }}
+
+                    <div class="q-plan-header">
+                        <p class="q-plan-name">{{ $plan->name }}</p>
+                        <p class="q-plan-duration">for {{ $plan->duration_days }} days</p>
+                        <div class="q-plan-price">PKR {{ number_format($plan->price, 0) }}</div>
+                        <span class="q-plan-price-sub">one-time payment</span>
                     </div>
-                    <p style="font-size:.78rem;color:var(--q-muted);margin:.4rem 0 1.5rem">
-                        per {{ $plan->duration_days }} {{ Str::plural('day', $plan->duration_days) }}
-                    </p>
-                    <a href="{{ route('register') }}" class="q-btn q-btn-sm {{ $isFirst ? 'q-btn-primary' : 'q-btn-outline' }}" style="width:100%;text-align:center">
-                        Get Started
-                    </a>
+
+                    <ul class="q-plan-features">
+                        <li class="q-plan-feature"><span class="q-plan-check" aria-hidden="true">✓</span> Access to all courses</li>
+                        <li class="q-plan-feature"><span class="q-plan-check" aria-hidden="true">✓</span> HD video lessons</li>
+                        <li class="q-plan-feature"><span class="q-plan-check" aria-hidden="true">✓</span> Full PDF book library</li>
+                        <li class="q-plan-feature"><span class="q-plan-check" aria-hidden="true">✓</span> Scholar Q&amp;A support</li>
+                    </ul>
+
+                    <div class="q-plan-cta">
+                        <a href="{{ route('checkout.show', $plan) }}"
+                           class="q-btn {{ $isPopular ? 'q-btn-primary' : 'q-btn-outline' }} q-btn-full">
+                            Subscribe
+                        </a>
+                    </div>
+
                 </div>
             @endforeach
         </div>
-        <p class="q-reveal" style="text-align:center;margin-top:1.5rem;font-size:.8rem;color:var(--q-muted)">
-            Payment via JazzCash · Manually reviewed &amp; approved
-        </p>
+
+        <div class="q-reveal q-pricing-note" style="margin-top:2rem">
+            Payment via JazzCash. Admin approves access within 24 hours.
+        </div>
+
     </div>
 </section>
 @endif
