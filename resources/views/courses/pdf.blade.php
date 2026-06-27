@@ -42,7 +42,7 @@
 
     <iframe
         class="q-pdf-viewer"
-        src="{{ $pdfUrl }}"
+        src="{{ route('content.pdf.stream', [$course->slug, $file]) }}#toolbar=0"
         title="{{ $file->file_title }}"
     ></iframe>
 

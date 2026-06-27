@@ -342,7 +342,7 @@
                 <article class="q-card q-course-card">
                     @if ($course->thumbnail)
                         <img style="height:90px;width:100%;object-fit:cover;border-radius:var(--q-radius-lg) var(--q-radius-lg) 0 0"
-                             src="{{ Storage::url($course->thumbnail) }}"
+                             src="{{ asset($course->thumbnail) }}"
                              alt="{{ $course->title }}"
                              loading="lazy">
                     @else

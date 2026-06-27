@@ -199,7 +199,7 @@
 
                     <div class="q-crd-thumb c{{ $ci }}">
                         @if ($course->thumbnail)
-                            <img src="{{ Storage::url($course->thumbnail) }}"
+                            <img src="{{ asset($course->thumbnail) }}"
                                  alt="{{ $course->title }}"
                                  loading="lazy">
                         @else

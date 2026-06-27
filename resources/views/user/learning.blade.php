@@ -29,7 +29,7 @@
                     <a href="{{ route('courses.show', $course->slug) }}" class="q-learn-card" style="text-decoration:none">
                         @if ($course->thumbnail)
                             <img
-                                src="{{ Storage::url($course->thumbnail) }}"
+                                src="{{ asset($course->thumbnail) }}"
                                 alt="{{ $course->title }}"
                                 class="q-learn-thumb"
                                 loading="lazy"

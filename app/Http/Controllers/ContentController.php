@@ -8,7 +8,9 @@ use App\Models\CourseVideo;
 use App\Models\UserLessonProgress;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ContentController extends Controller
 {
@@ -59,9 +61,28 @@ class ContentController extends Controller
                 ->with('warning', 'An active subscription is required to access course content.');
         }
 
-        $pdfUrl = asset($file->file_path);
+        return view('courses.pdf', compact('course', 'file'));
+    }
 
-        return view('courses.pdf', compact('course', 'file', 'pdfUrl'));
+    public function pdfStream(Request $request, string $slug, CourseFile $file): StreamedResponse
+    {
+        $course = Course::where('slug', $slug)
+            ->where('status', 'published')
+            ->firstOrFail();
+
+        abort_if($file->course_id !== $course->id, 404);
+
+        if (! $course->is_free && ! $request->user()->hasActiveSubscription()) {
+            abort(403);
+        }
+
+        abort_unless(Storage::exists($file->file_path), 404);
+
+        return Storage::response($file->file_path, null, [
+            'Content-Type'        => 'application/pdf',
+            'Content-Disposition' => 'inline',
+            'Cache-Control'       => 'private, no-store',
+        ]);
     }
 
     public function markComplete(Request $request, string $slug, CourseVideo $video): RedirectResponse

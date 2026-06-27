@@ -182,7 +182,7 @@
 
         <div class="q-course-hero-thumb">
             @if ($course->thumbnail)
-                <img src="{{ Storage::url($course->thumbnail) }}" alt="{{ $course->title }}">
+                <img src="{{ asset($course->thumbnail) }}" alt="{{ $course->title }}">
             @else
                 {{ mb_substr($course->title, 0, 1) }}
             @endif

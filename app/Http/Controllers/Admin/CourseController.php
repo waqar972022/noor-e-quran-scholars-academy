@@ -53,7 +53,8 @@ class CourseController extends Controller
 
         $thumbName = Str::slug(pathinfo($thumb->getClientOriginalName(), PATHINFO_FILENAME))
             . '-' . time() . '.' . $thumb->extension();
-        $thumbPath = $thumb->storeAs('thumbnails', $thumbName, 'public');
+        $thumb->move(public_path('thumbnails'), $thumbName);
+        $thumbPath = 'thumbnails/' . $thumbName;
 
         $slug = $this->uniqueSlug($request->title);
 
@@ -112,12 +113,13 @@ class CourseController extends Controller
             $this->assertImageMime($thumb->getPathname());
 
             if ($course->thumbnail) {
-                Storage::disk('public')->delete($course->thumbnail);
+                @unlink(public_path($course->thumbnail));
             }
 
             $thumbName = Str::slug(pathinfo($thumb->getClientOriginalName(), PATHINFO_FILENAME))
                 . '-' . time() . '.' . $thumb->extension();
-            $data['thumbnail'] = $thumb->storeAs('thumbnails', $thumbName, 'public');
+            $thumb->move(public_path('thumbnails'), $thumbName);
+            $data['thumbnail'] = 'thumbnails/' . $thumbName;
         }
 
         $course->update($data);
@@ -129,10 +131,10 @@ class CourseController extends Controller
     public function destroy(Course $course): RedirectResponse
     {
         if ($course->thumbnail) {
-            Storage::disk('public')->delete($course->thumbnail);
+            @unlink(public_path($course->thumbnail));
         }
         foreach ($course->files as $file) {
-            Storage::disk('local')->delete($file->file_path);
+            Storage::delete($file->file_path);
         }
 
         $course->delete();
@@ -147,10 +149,7 @@ class CourseController extends Controller
     {
         abort_if($file->course_id !== $course->id, 404);
 
-        $fullPath = public_path($file->file_path);
-        if (file_exists($fullPath)) {
-            unlink($fullPath);
-        }
+        Storage::delete($file->file_path);
         $file->delete();
 
         return back()->with('success', 'PDF removed.');
@@ -221,11 +220,6 @@ class CourseController extends Controller
             return;
         }
 
-        $dir = public_path('course-files/' . $course->id);
-        if (! is_dir($dir)) {
-            mkdir($dir, 0755, true);
-        }
-
         foreach ($request->file('pdf_files') as $i => $pdf) {
             $realMime = (new \finfo(FILEINFO_MIME_TYPE))->file($pdf->getPathname());
             if ($realMime !== 'application/pdf') {
@@ -235,12 +229,12 @@ class CourseController extends Controller
             $pdfName = Str::slug(pathinfo($pdf->getClientOriginalName(), PATHINFO_FILENAME))
                 . '-' . time() . '-' . $i . '.pdf';
 
-            $pdf->move($dir, $pdfName);
+            $storedPath = $pdf->storeAs('course-files/' . $course->id, $pdfName);
 
             CourseFile::create([
                 'course_id'  => $course->id,
                 'file_title' => $request->input("pdf_titles.{$i}") ?: $pdf->getClientOriginalName(),
-                'file_path'  => 'course-files/' . $course->id . '/' . $pdfName,
+                'file_path'  => $storedPath,
             ]);
         }
     }

@@ -84,7 +84,7 @@
 
         @if ($course->thumbnail)
             <div style="margin-bottom:.85rem">
-                <img src="{{ asset('storage/' . $course->thumbnail) }}"
+                <img src="{{ asset($course->thumbnail) }}"
                      alt="Current thumbnail"
                      style="max-width:220px;border-radius:var(--q-radius);border:1.5px solid var(--q-border)">
                 <p style="font-size:.75rem;color:var(--q-muted);margin-top:.35rem">Current thumbnail</p>

@@ -58,6 +58,7 @@ Route::middleware('auth')->group(function () {
     // Subscription-gated content
     Route::get('/courses/{slug}/videos/{video}',          [ContentController::class, 'video'])->name('content.video');
     Route::get('/courses/{slug}/files/{file}',            [ContentController::class, 'pdf'])->name('content.pdf');
+    Route::get('/courses/{slug}/files/{file}/stream',     [ContentController::class, 'pdfStream'])->name('content.pdf.stream');
     Route::post('/courses/{slug}/videos/{video}/complete',[ContentController::class, 'markComplete'])->name('content.video.complete');
 
 

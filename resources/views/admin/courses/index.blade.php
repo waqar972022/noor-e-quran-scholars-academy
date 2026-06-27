@@ -41,7 +41,7 @@
                     <tr>
                         <td>
                             @if ($course->thumbnail)
-                                <img src="{{ asset('storage/' . $course->thumbnail) }}"
+                                <img src="{{ asset($course->thumbnail) }}"
                                      alt="" class="q-thumb-sm">
                             @else
                                 <span class="q-thumb-placeholder">—</span>

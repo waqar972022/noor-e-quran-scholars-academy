@@ -11,9 +11,7 @@ use App\Notifications\PaymentRejected;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class PaymentController extends Controller
 {
@@ -49,12 +47,12 @@ class PaymentController extends Controller
         return view('admin.payments.show', compact('paymentRequest'));
     }
 
-    public function screenshot(PaymentRequest $paymentRequest): StreamedResponse
+    public function screenshot(PaymentRequest $paymentRequest): \Symfony\Component\HttpFoundation\BinaryFileResponse
     {
-        $disk = Storage::disk('local');
-        abort_unless($paymentRequest->screenshot && $disk->exists($paymentRequest->screenshot), 404);
+        $path = public_path($paymentRequest->screenshot);
+        abort_unless($paymentRequest->screenshot && file_exists($path), 404);
 
-        return $disk->response($paymentRequest->screenshot, null, ['Cache-Control' => 'private, no-store']);
+        return response()->file($path, ['Cache-Control' => 'private, no-store']);
     }
 
     public function approve(PaymentRequest $paymentRequest): RedirectResponse
