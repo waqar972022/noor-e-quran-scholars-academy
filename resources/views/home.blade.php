@@ -170,6 +170,22 @@
         border-top: 1px solid var(--q-border);
     }
 
+    /* ── Scroll reveal ───────────────────────────────── */
+    .q-reveal {
+        opacity: 0;
+        transform: translateY(26px);
+        transition: opacity .55s ease, transform .55s ease;
+    }
+    .q-reveal.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    .q-reveal[data-delay="1"] { transition-delay: .10s; }
+    .q-reveal[data-delay="2"] { transition-delay: .20s; }
+    .q-reveal[data-delay="3"] { transition-delay: .30s; }
+    .q-reveal[data-delay="4"] { transition-delay: .40s; }
+    .q-reveal[data-delay="5"] { transition-delay: .50s; }
+
     /* ── CTA Band ────────────────────────────────────── */
     .q-cta-band {
         background: var(--q-green);
@@ -259,7 +275,7 @@
 
 {{-- ══ SECTION 1b — Meet the Scholar ══ --}}
 <section aria-labelledby="scholar-heading" style="border-bottom:1.5px solid var(--q-border)">
-    <div class="q-scholar-grid" style="max-width:900px;margin:0 auto;padding:3rem 1.5rem;display:grid;grid-template-columns:200px 1fr;gap:2.5rem;align-items:center">
+    <div class="q-scholar-grid q-reveal" style="max-width:900px;margin:0 auto;padding:3rem 1.5rem;display:grid;grid-template-columns:200px 1fr;gap:2.5rem;align-items:center">
 
         <div style="text-align:center">
             <img src="{{ asset('images/scholar.jpeg') }}"
@@ -286,31 +302,31 @@
     <div style="max-width:1100px;margin:0 auto;padding:2.5rem 1.5rem">
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.25rem">
 
-            <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:.5rem;padding:.75rem">
+            <div class="q-reveal" data-delay="1" style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:.5rem;padding:.75rem">
                 <span style="font-size:1.8rem">🎓</span>
                 <strong style="font-size:.9rem;color:var(--q-ink)">Qualified Scholars</strong>
                 <p style="font-size:.78rem;color:var(--q-muted);line-height:1.55">Verified Islamic scholars with formal Dars-e-Nizami education</p>
             </div>
 
-            <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:.5rem;padding:.75rem">
+            <div class="q-reveal" data-delay="2" style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:.5rem;padding:.75rem">
                 <span style="font-size:1.8rem">🆓</span>
                 <strong style="font-size:.9rem;color:var(--q-ink)">3-Day Free Trial</strong>
                 <p style="font-size:.78rem;color:var(--q-muted);line-height:1.55">Try live classes for 3 days before committing to any plan</p>
             </div>
 
-            <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:.5rem;padding:.75rem">
+            <div class="q-reveal" data-delay="3" style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:.5rem;padding:.75rem">
                 <span style="font-size:1.8rem">🕐</span>
                 <strong style="font-size:.9rem;color:var(--q-ink)">Flexible Timings</strong>
                 <p style="font-size:.78rem;color:var(--q-muted);line-height:1.55">Schedule classes at times that suit you and your family</p>
             </div>
 
-            <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:.5rem;padding:.75rem">
+            <div class="q-reveal" data-delay="4" style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:.5rem;padding:.75rem">
                 <span style="font-size:1.8rem">💬</span>
                 <strong style="font-size:.9rem;color:var(--q-ink)">WhatsApp Support</strong>
                 <p style="font-size:.78rem;color:var(--q-muted);line-height:1.55">Direct access to your teacher and admin via WhatsApp</p>
             </div>
 
-            <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:.5rem;padding:.75rem">
+            <div class="q-reveal" data-delay="5" style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:.5rem;padding:.75rem">
                 <span style="font-size:1.8rem">📋</span>
                 <strong style="font-size:.9rem;color:var(--q-ink)">Parent Reports</strong>
                 <p style="font-size:.78rem;color:var(--q-muted);line-height:1.55">Regular progress reports shared with parents on WhatsApp</p>
@@ -325,7 +341,7 @@
 <section aria-labelledby="courses-heading">
     <div class="q-courses-wrap">
 
-        <div class="q-courses-header">
+        <div class="q-courses-header q-reveal">
             <div>
                 <p class="q-eyebrow">Learn From Scholars</p>
                 <h2 id="courses-heading" class="q-section-title">Featured Courses</h2>
@@ -339,7 +355,7 @@
                     $thumbClasses = ['q-course-thumb--quran','q-course-thumb--fiqh','q-course-thumb--arabic','q-course-thumb--seerah'];
                     $tc = $thumbClasses[$loop->index % 4];
                 @endphp
-                <article class="q-card q-course-card">
+                <article class="q-card q-course-card q-reveal" data-delay="{{ ($loop->index % 4) + 1 }}">
                     @if ($course->thumbnail)
                         <img style="height:90px;width:100%;object-fit:cover;border-radius:var(--q-radius-lg) var(--q-radius-lg) 0 0"
                              src="{{ asset($course->thumbnail) }}"
@@ -379,25 +395,25 @@
 {{-- ══ SECTION 4 — How It Works ══ --}}
 <section class="q-section-alt" aria-labelledby="how-heading">
     <div class="q-courses-wrap" style="padding-top:3rem;padding-bottom:3rem">
-        <div style="text-align:center;margin-bottom:2.5rem">
+        <div class="q-reveal" style="text-align:center;margin-bottom:2.5rem">
             <p class="q-eyebrow">How It Works</p>
             <h2 id="how-heading" class="q-section-title">Start Learning in 3 Steps</h2>
         </div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem">
 
-            <div class="q-card" style="text-align:center;padding:1.75rem 1.25rem">
+            <div class="q-card q-reveal" data-delay="1" style="text-align:center;padding:1.75rem 1.25rem">
                 <div style="font-family:var(--q-font-serif);font-size:2.4rem;color:var(--q-green);opacity:.25;margin-bottom:.5rem">01</div>
                 <h3 style="font-family:var(--q-font-serif);font-size:1rem;color:var(--q-ink);margin-bottom:.5rem">Create Your Account</h3>
                 <p style="font-size:.85rem;color:var(--q-muted);line-height:1.7">Register free with your name, email, and phone. Only takes a minute.</p>
             </div>
 
-            <div class="q-card" style="text-align:center;padding:1.75rem 1.25rem">
+            <div class="q-card q-reveal" data-delay="2" style="text-align:center;padding:1.75rem 1.25rem">
                 <div style="font-family:var(--q-font-serif);font-size:2.4rem;color:var(--q-green);opacity:.25;margin-bottom:.5rem">02</div>
                 <h3 style="font-family:var(--q-font-serif);font-size:1rem;color:var(--q-ink);margin-bottom:.5rem">Choose a Plan</h3>
                 <p style="font-size:.85rem;color:var(--q-muted);line-height:1.7">Pick monthly or annual. Send payment via JazzCash — simple and local.</p>
             </div>
 
-            <div class="q-card" style="text-align:center;padding:1.75rem 1.25rem">
+            <div class="q-card q-reveal" data-delay="3" style="text-align:center;padding:1.75rem 1.25rem">
                 <div style="font-family:var(--q-font-serif);font-size:2.4rem;color:var(--q-green);opacity:.25;margin-bottom:.5rem">03</div>
                 <h3 style="font-family:var(--q-font-serif);font-size:1rem;color:var(--q-ink);margin-bottom:.5rem">Access Everything</h3>
                 <p style="font-size:.85rem;color:var(--q-muted);line-height:1.7">Once approved, all video courses and PDF books are yours.</p>
@@ -410,9 +426,9 @@
 
 {{-- ══ SECTION 5 — CTA Band ══ --}}
 <section class="q-cta-band" aria-labelledby="cta-heading">
-    <h2 id="cta-heading">Begin your journey of sacred knowledge</h2>
-    <p>Join thousands of learners studying the Qur'an and Sunnah.</p>
-    <a href="{{ route('register') }}" class="q-btn q-btn-lg q-btn-parch">Create Free Account</a>
+    <h2 id="cta-heading" class="q-reveal">Begin your journey of sacred knowledge</h2>
+    <p class="q-reveal" data-delay="1">Join thousands of learners studying the Qur'an and Sunnah.</p>
+    <a href="{{ route('register') }}" class="q-btn q-btn-lg q-btn-parch q-reveal" data-delay="2">Create Free Account</a>
 </section>
 
 @endsection
@@ -457,6 +473,28 @@
         }
 
         startAuto();
+    })();
+
+    // ── Scroll reveal ──────────────────────────────────────
+    (function () {
+        var els = document.querySelectorAll('.q-reveal');
+        if (!els.length) return;
+
+        if (!('IntersectionObserver' in window)) {
+            els.forEach(function (el) { el.classList.add('is-visible'); });
+            return;
+        }
+
+        var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12 });
+
+        els.forEach(function (el) { observer.observe(el); });
     })();
 </script>
 @endpush
