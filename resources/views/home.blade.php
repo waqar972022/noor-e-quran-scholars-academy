@@ -264,6 +264,82 @@
         border-color: var(--q-green);
         box-shadow: 0 0 0 3px rgba(27,67,50,.1), var(--q-shadow-panel);
     }
+    .q-plan-card-home .q-plan-popular-badge {
+        position: absolute;
+        top: 0; left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        background: var(--q-green);
+        color: var(--q-parch);
+        font-size: .7rem;
+        font-weight: 700;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+        padding: 3px 14px;
+        border-radius: 999px;
+        white-space: nowrap;
+    }
+    .q-plan-card-home .q-plan-header {
+        padding: 2rem 1.5rem 1.5rem;
+        border-bottom: 1.5px solid var(--q-border);
+        text-align: center;
+    }
+    .q-plan-card-home .q-plan-name {
+        font-family: var(--q-font-serif);
+        font-size: 1.2rem;
+        color: var(--q-ink);
+        margin-bottom: .25rem;
+    }
+    .q-plan-card-home .q-plan-duration { font-size: .8rem; color: var(--q-muted); margin-bottom: 1.1rem; }
+    .q-plan-card-home .q-plan-price {
+        font-size: 2.4rem;
+        font-weight: 800;
+        color: var(--q-green);
+        line-height: 1;
+    }
+    .q-plan-card-home .q-plan-price-sub {
+        font-size: .78rem;
+        font-weight: 400;
+        color: var(--q-muted);
+        display: block;
+        margin-top: .25rem;
+    }
+    .q-plan-card-home .q-plan-features {
+        list-style: none;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: .75rem;
+        flex: 1;
+    }
+    .q-plan-card-home .q-plan-feature {
+        display: flex;
+        align-items: center;
+        gap: .6rem;
+        font-size: .88rem;
+        color: var(--q-ink-2);
+    }
+    .q-plan-card-home .q-plan-check {
+        width: 18px; height: 18px;
+        border-radius: 50%;
+        background: var(--q-green-light);
+        display: grid;
+        place-items: center;
+        font-size: .6rem;
+        color: var(--q-green);
+        flex-shrink: 0;
+    }
+    .q-plan-card-home .q-plan-cta { padding: 0 1.5rem 1.75rem; }
+    .q-plan-card-home .q-pricing-note {
+        text-align: center;
+        max-width: 500px;
+        margin: 2rem auto 0;
+        font-size: .85rem;
+        color: var(--q-muted);
+        padding: 1.1rem 1.5rem;
+        border: 1.5px solid var(--q-border);
+        border-radius: var(--q-radius-lg);
+        background: var(--q-parch-2);
+    }
 
     /* ── CTA Band ────────────────────────────────────── */
     .q-cta-band {
@@ -597,7 +673,7 @@
             @endforeach
         </div>
 
-        <div class="q-reveal q-pricing-note" style="margin-top:2rem">
+        <div class="q-reveal" style="text-align:center;max-width:500px;margin:2rem auto 0;font-size:.85rem;color:var(--q-muted);padding:1.1rem 1.5rem;border:1.5px solid var(--q-border);border-radius:var(--q-radius-lg);background:var(--q-parch-2)">
             Payment via JazzCash. Admin approves access within 24 hours.
         </div>
 
