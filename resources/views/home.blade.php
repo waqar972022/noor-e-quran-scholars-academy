@@ -7,7 +7,8 @@
     /* ── Hero Slider ─────────────────────────────────── */
     .q-slider {
         position: relative;
-        height: calc(100vh - 58px);
+        height: 62vh;
+        min-height: 380px;
         overflow: hidden;
         border-bottom: 1.5px solid var(--q-border);
     }
