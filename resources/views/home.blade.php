@@ -563,9 +563,7 @@
                             <span class="q-badge q-badge-green">{{ $course->category->name }}</span>
                         @endif
                         <h3 class="q-course-title">{{ $course->title }}</h3>
-                        @if ($course->owner)
-                            <p class="q-course-instructor">by {{ $course->owner->name }}</p>
-                        @elseif ($course->short_description)
+                        @if ($course->short_description)
                             <p class="q-course-instructor">{{ Str::limit($course->short_description, 60) }}</p>
                         @endif
                         @if ($course->videos_count > 0 || $course->files_count > 0)

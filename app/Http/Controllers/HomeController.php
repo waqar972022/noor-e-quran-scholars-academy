@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
-use App\Models\CourseFile;
 use App\Models\CourseVideo;
 use App\Models\SubscriptionPlan;
 use App\Models\User;
@@ -13,7 +12,7 @@ class HomeController extends Controller
 {
     public function __invoke(): View
     {
-        $featuredCourses = Course::with(['category', 'owner'])
+        $featuredCourses = Course::with('category')
             ->withCount(['videos', 'files'])
             ->where('status', 'published')
             ->latest()
