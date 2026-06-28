@@ -39,3 +39,4 @@ Thumbs.db
 yarn-debug.log*
 yarn-error.log*
 /graphify-out
+.gstack/

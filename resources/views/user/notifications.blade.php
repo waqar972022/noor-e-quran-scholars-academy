@@ -37,7 +37,6 @@
                             'payment_rejected'        => ['&#x2717;', '#f87171'],
                             'subscription_expiring_soon' => ['&#x25B2;', '#fbbf24'],
                             'subscription_expired'    => ['&#x25BC;', '#f87171'],
-                            'certificate_issued'      => ['&#x2605;', 'var(--q-gold)'],
                         ];
                         [$icon, $iconColor] = $iconMap[$type] ?? ['&#x25CB;', 'var(--q-muted)'];
                     @endphp

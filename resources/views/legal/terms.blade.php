@@ -29,9 +29,8 @@
                 2. Use of the Platform
             </h2>
             <p>
-                The Platform provides access to Islamic educational content including video lessons, PDF materials,
-                and certificates of completion. Access to paid content requires an active subscription purchased
-                through the Platform.
+                The Platform provides access to Islamic educational content including video lessons and PDF materials.
+                Access to paid content requires an active subscription purchased through the Platform.
             </p>
             <p style="margin-top:.75rem">
                 You agree to use the Platform only for lawful purposes and in a manner consistent with Islamic
@@ -46,8 +45,7 @@
             </h2>
             <p>
                 Subscription access is granted upon manual verification of payment by our team. Payments are
-                processed offline via bank transfer or mobile wallets. The Platform does not store payment card
-                information.
+                made via JazzCash. The Platform does not store payment card information.
             </p>
             <p style="margin-top:.75rem">
                 Subscription periods begin on the date of approval and expire on the stated end date. Renewals
@@ -61,7 +59,7 @@
                 4. Intellectual Property
             </h2>
             <p>
-                All course content, including videos, PDFs, and certificates, is the intellectual property of
+                All course content, including videos and PDFs, is the intellectual property of
                 {{ setting('site_name', config('app.name')) }}. You may access content for personal, non-commercial
                 study only. Reproduction, redistribution, or resale of any content is not permitted.
             </p>
