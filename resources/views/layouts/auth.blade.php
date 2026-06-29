@@ -87,10 +87,21 @@
         }
         .q-navbar-links a:hover,
         .q-navbar-links a.active { color: var(--q-green); font-weight: 500; }
-        .q-navbar-actions { display: flex; gap: 8px; align-items: center; }
+        .q-navbar-actions { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
 
         @media (min-width: 640px) {
             .q-navbar-links { display: flex; }
+        }
+
+        /* ── Mobile navbar fixes ────────────────────────────── */
+        @media (max-width: 639px) {
+            .q-navbar { padding: 0 1rem; gap: .5rem; }
+            .q-navbar-sub { display: none; }
+            .q-navbar-name { font-size: .875rem; white-space: nowrap; }
+            .q-navbar-actions { gap: 4px; }
+        }
+        @media (max-width: 400px) {
+            .q-navbar-name { display: none; }
         }
 
         /* ── Auth shell ─────────────────────────────────────── */
@@ -208,6 +219,13 @@
         .auth-form-panel.active  { display: block; }
         .auth-footer-text { text-align: center; font-size: .8rem; color: var(--q-muted); margin-top: 1rem; }
         .auth-footer-text a { color: var(--q-green); font-weight: 500; cursor: pointer; }
+
+        /* ── Mobile auth form fixes ─────────────────────────── */
+        @media (max-width: 480px) {
+            .hero-side { padding: 1.25rem 1rem; }
+            .form-side { padding: 1.25rem 1rem; }
+            .auth-heading { font-size: 1.4rem; }
+        }
     </style>
 </head>
 <body>

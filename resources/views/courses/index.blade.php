@@ -28,7 +28,7 @@
     border: 1.5px solid var(--q-border);
     border-radius: var(--q-radius-lg);
 }
-.q-filter-search { flex: 1; min-width: 200px; }
+.q-filter-search { flex: 1; min-width: min(200px, 100%); }
 .q-filter-cat    { min-width: 160px; cursor: pointer; }
 @media (max-width: 480px) {
     .q-filter-search, .q-filter-cat { min-width: 100%; }

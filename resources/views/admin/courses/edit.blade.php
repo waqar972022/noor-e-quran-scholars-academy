@@ -2,6 +2,21 @@
 
 @section('title', 'Edit: ' . $course->title)
 
+@push('styles')
+<style>
+.pdf-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: .75rem;
+    margin-bottom: .75rem;
+    align-items: start;
+}
+@media (max-width: 600px) {
+    .pdf-row { grid-template-columns: 1fr; }
+}
+</style>
+@endpush
+
 @section('content')
 
 <div class="q-page-header">
@@ -106,7 +121,7 @@
         <div class="q-panel-title">Add More PDF Materials</div>
 
         <div id="pdf-rows">
-            <div class="pdf-row" style="display:grid;grid-template-columns:1fr 2fr;gap:.75rem;margin-bottom:.75rem;align-items:start">
+            <div class="pdf-row">
                 <div class="q-field" style="margin:0">
                     <label class="q-label">Title</label>
                     <input class="q-input" type="text" name="pdf_titles[]" placeholder="e.g. Week 1 Notes">
@@ -244,7 +259,7 @@
     document.getElementById('add-pdf').addEventListener('click', function () {
         var row = document.createElement('div');
         row.className = 'pdf-row';
-        row.style.cssText = 'display:grid;grid-template-columns:1fr 2fr;gap:.75rem;margin-bottom:.75rem;align-items:start';
+        row.style.cssText = '';
         row.innerHTML =
             '<div class="q-field" style="margin:0">' +
                 '<label class="q-label">Title</label>' +

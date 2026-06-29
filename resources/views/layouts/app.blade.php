@@ -74,10 +74,74 @@
         }
         .q-navbar-links a:hover,
         .q-navbar-links a.active { color: var(--q-green); font-weight: 500; }
-        .q-navbar-actions { display: flex; gap: 8px; align-items: center; }
+        .q-navbar-actions { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
 
         @media (min-width: 640px) {
             .q-navbar-links { display: flex; }
+        }
+
+        /* ── Mobile navbar text fixes ────────────────────────── */
+        @media (max-width: 639px) {
+            .q-navbar { padding: 0 1rem; gap: .5rem; }
+            .q-navbar-sub  { display: none; }
+            .q-navbar-name { font-size: .875rem; white-space: nowrap; }
+            .q-navbar-actions { gap: 4px; }
+        }
+        @media (max-width: 400px) {
+            .q-navbar-name { display: none; }
+        }
+
+        /* ── Hamburger button (mobile only) ─────────────────── */
+        .q-nav-hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 6px 4px;
+            flex-shrink: 0;
+        }
+        .q-nav-hamburger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--q-ink);
+            border-radius: 2px;
+            transition: transform .2s, opacity .2s;
+        }
+        @media (min-width: 640px) {
+            .q-nav-hamburger { display: none; }
+        }
+
+        /* ── Mobile nav drawer ───────────────────────────────── */
+        .q-mobile-menu {
+            display: none;
+            position: sticky;
+            top: 58px;
+            z-index: 49;
+            background: var(--q-parch);
+            border-bottom: 1.5px solid var(--q-border);
+            padding: .25rem 0 .5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,.06);
+        }
+        .q-mobile-menu.open { display: block; }
+        .q-mobile-menu a {
+            display: block;
+            padding: .75rem 1.5rem;
+            color: var(--q-ink-2);
+            font-size: .9rem;
+            text-decoration: none;
+            border-top: 1px solid var(--q-border);
+        }
+        .q-mobile-menu a:hover,
+        .q-mobile-menu a.active {
+            color: var(--q-green);
+            background: color-mix(in srgb, var(--q-green) 5%, transparent);
+        }
+        @media (min-width: 640px) {
+            .q-mobile-menu { display: none !important; }
         }
     </style>
 
@@ -101,6 +165,10 @@
             <li><a href="{{ route('live-classes') }}"      class="{{ request()->routeIs('live-classes')  ? 'active' : '' }}">Live Classes</a></li>
             <li><a href="{{ route('pricing') }}"           class="{{ request()->routeIs('pricing')       ? 'active' : '' }}">Pricing</a></li>
         </ul>
+
+        <button class="q-nav-hamburger" id="q-hamburger" aria-label="Open navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
 
         <div class="q-navbar-actions">
             @auth
@@ -136,6 +204,14 @@
             @endauth
         </div>
     </nav>
+
+    {{-- ── Mobile nav drawer ── --}}
+    <div class="q-mobile-menu" id="q-mobile-menu">
+        <a href="{{ url('/') }}"                 class="{{ request()->routeIs('home')         ? 'active' : '' }}">Home</a>
+        <a href="{{ route('courses.index') }}"    class="{{ request()->routeIs('courses.*')    ? 'active' : '' }}">Courses</a>
+        <a href="{{ route('live-classes') }}"     class="{{ request()->routeIs('live-classes') ? 'active' : '' }}">Live Classes</a>
+        <a href="{{ route('pricing') }}"          class="{{ request()->routeIs('pricing')      ? 'active' : '' }}">Pricing</a>
+    </div>
 
     {{-- ── Flash messages ── --}}
     @if (session()->hasAny(['success', 'warning', 'error', 'info']))
@@ -173,5 +249,22 @@
     @include('partials.footer')
 
     @stack('scripts')
+    <script>
+    (function () {
+        var btn  = document.getElementById('q-hamburger');
+        var menu = document.getElementById('q-mobile-menu');
+        if (!btn || !menu) return;
+        btn.addEventListener('click', function () {
+            var open = menu.classList.toggle('open');
+            btn.setAttribute('aria-expanded', open);
+        });
+        document.addEventListener('click', function (e) {
+            if (!btn.contains(e.target) && !menu.contains(e.target)) {
+                menu.classList.remove('open');
+                btn.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }());
+    </script>
 </body>
 </html>

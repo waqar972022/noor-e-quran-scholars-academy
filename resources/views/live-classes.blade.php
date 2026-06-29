@@ -156,7 +156,7 @@
 .q-ptab.active { background: var(--q-green); color: var(--q-parch); border-color: var(--q-green); }
 
 .q-pricing-table-wrap { display: none; }
-.q-pricing-table-wrap.active { display: block; }
+.q-pricing-table-wrap.active { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
 
 .q-pricing-table {
     width: 100%;

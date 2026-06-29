@@ -10,6 +10,24 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     @endif
 
+    <style>
+    .q-admin-topbar { gap: 1rem; }
+    .q-admin-topbar-title {
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .q-admin-user { flex-shrink: 0; }
+    @media (max-width: 768px) {
+        .q-admin-topbar { padding: .65rem 1rem; }
+    }
+    @media (max-width: 480px) {
+        .q-admin-topbar-title { font-size: .9rem; }
+    }
+    </style>
+
     @stack('styles')
 </head>
 <body class="q-admin-body">
