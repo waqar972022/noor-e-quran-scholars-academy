@@ -221,6 +221,9 @@
         .auth-footer-text a { color: var(--q-green); font-weight: 500; cursor: pointer; }
 
         /* ── Mobile auth form fixes ─────────────────────────── */
+        @media (max-width: 859px) {
+            .form-side { order: -1; }
+        }
         @media (max-width: 480px) {
             .hero-side { padding: 1.25rem 1rem; }
             .form-side { padding: 1.25rem 1rem; }

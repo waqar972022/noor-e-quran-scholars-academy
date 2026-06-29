@@ -145,6 +145,7 @@
         .q-slide-inner { justify-content: center; text-align: center; }
         .q-slide-actions { justify-content: center; }
         .q-scholar-grid { grid-template-columns: 1fr !important; text-align: center; }
+        .q-scholar-grid img { margin: 0 auto; }
         .q-enrol-card { display: none; }
     }
 
