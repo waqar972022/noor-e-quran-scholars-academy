@@ -134,7 +134,7 @@ class CourseController extends Controller
             @unlink(public_path($course->thumbnail));
         }
         foreach ($course->files as $file) {
-            Storage::delete($file->file_path);
+            Storage::disk('public')->delete($file->file_path);
         }
 
         $course->delete();
@@ -149,7 +149,7 @@ class CourseController extends Controller
     {
         abort_if($file->course_id !== $course->id, 404);
 
-        Storage::delete($file->file_path);
+        Storage::disk('public')->delete($file->file_path);
         $file->delete();
 
         return back()->with('success', 'PDF removed.');
@@ -229,7 +229,7 @@ class CourseController extends Controller
             $pdfName = Str::slug(pathinfo($pdf->getClientOriginalName(), PATHINFO_FILENAME))
                 . '-' . time() . '-' . $i . '.pdf';
 
-            $storedPath = $pdf->storeAs('course-files/' . $course->id, $pdfName);
+            $storedPath = $pdf->storeAs('course-files/' . $course->id, $pdfName, 'public');
 
             CourseFile::create([
                 'course_id'  => $course->id,

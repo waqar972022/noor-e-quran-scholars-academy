@@ -248,7 +248,8 @@
                                 <span aria-hidden="true" style="{{ $done ? 'opacity:.4' : '' }}">&#x25B6;</span>
                                 <a href="{{ route('content.video', [$course->slug, $video->id]) }}"
                                    class="q-lesson-title">{{ $video->video_title }}</a>
-                                <span class="q-lesson-play">{{ $done ? 'Done' : '&#x25B6; Play' }}</span>
+                                <a href="{{ route('content.video', [$course->slug, $video->id]) }}"
+                                   class="q-lesson-play">{{ $done ? 'Done' : '&#x25B6; Play' }}</a>
                             </li>
                         @else
                             <li class="q-lesson-item">
@@ -266,7 +267,8 @@
                                 <span aria-hidden="true">📄</span>
                                 <a href="{{ route('content.pdf', [$course->slug, $file->id]) }}"
                                    class="q-lesson-title">{{ $file->file_title ?? 'PDF Course Book' }}</a>
-                                <span class="q-lesson-play">📄 Open</span>
+                                <a href="{{ route('content.pdf', [$course->slug, $file->id]) }}"
+                                   class="q-lesson-play">📄 Open</a>
                             </li>
                         @else
                             <li class="q-pdf-item">

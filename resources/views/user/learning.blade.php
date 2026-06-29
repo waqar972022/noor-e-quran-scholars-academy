@@ -64,7 +64,7 @@
                                         </span>
                                     @endif
                                 </div>
-                                @if ($isSubscribed)
+                                @if ($isSubscribed || $course->is_free)
                                     <span style="font-size:.75rem;color:var(--q-green);font-weight:600">Open &rarr;</span>
                                 @else
                                     <span style="font-size:.75rem;color:var(--q-muted)">Locked</span>

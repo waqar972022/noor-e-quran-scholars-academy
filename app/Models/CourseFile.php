@@ -16,6 +16,13 @@ class CourseFile extends Model
         'file_path',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'course_id' => 'integer',
+        ];
+    }
+
     public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);

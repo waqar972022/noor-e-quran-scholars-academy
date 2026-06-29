@@ -218,10 +218,11 @@
                         <div class="q-crd-footer">
                             @if ($course->is_free)
                                 <span class="q-badge" style="background:color-mix(in srgb,var(--q-green) 15%,transparent);color:var(--q-green);border:1px solid color-mix(in srgb,var(--q-green) 30%,transparent)">Free</span>
+                                <span class="q-btn q-btn-primary q-btn-sm">Start Free</span>
                             @else
                                 <span class="q-badge q-badge-gold">Premium</span>
+                                <span class="q-btn q-btn-primary q-btn-sm">Enroll</span>
                             @endif
-                            <span class="q-btn q-btn-primary q-btn-sm">Enroll</span>
                         </div>
                     </div>
 

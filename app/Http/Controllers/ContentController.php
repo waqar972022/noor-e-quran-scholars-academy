@@ -76,9 +76,9 @@ class ContentController extends Controller
             abort(403);
         }
 
-        abort_unless(Storage::exists($file->file_path), 404);
+        abort_unless(Storage::disk('public')->exists($file->file_path), 404);
 
-        return Storage::response($file->file_path, null, [
+        return Storage::disk('public')->response($file->file_path, null, [
             'Content-Type'        => 'application/pdf',
             'Content-Disposition' => 'inline',
             'Cache-Control'       => 'private, no-store',

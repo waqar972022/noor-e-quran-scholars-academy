@@ -21,6 +21,7 @@ class CourseVideo extends Model
     protected function casts(): array
     {
         return [
+            'course_id'   => 'integer',
             'video_order' => 'integer',
         ];
     }
