@@ -22,7 +22,7 @@
 }
 .q-course-hero-thumb {
     width: 100%;
-    aspect-ratio: 16/9;
+    aspect-ratio: 4/3;
     border-radius: var(--q-radius-lg);
     overflow: hidden;
     border: 1.5px solid var(--q-border);
@@ -34,7 +34,7 @@
     font-size: 5rem;
     color: color-mix(in srgb, var(--q-green) 18%, transparent);
 }
-.q-course-hero-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.q-course-hero-thumb img { width: 100%; height: 100%; object-fit: contain; display: block; }
 .q-course-hero-meta { display: flex; flex-direction: column; gap: .6rem; }
 .q-course-hero-title {
     font-family: var(--q-font-serif);
@@ -211,7 +211,7 @@
                     <span>{{ $course->videos->count() }} video lessons</span>
                 @endif
                 @if ($course->files->isNotEmpty())
-                    <span>· PDF course book included</span>
+                    <span>&middot; PDF course book included</span>
                 @endif
             </div>
         </div>
@@ -264,17 +264,17 @@
                     @foreach ($course->files as $file)
                         @if ($isSubscribed)
                             <li class="q-pdf-item unlocked">
-                                <span aria-hidden="true">📄</span>
+                                <span aria-hidden="true" style="font-size:.75rem;color:var(--q-muted)">[PDF]</span>
                                 <a href="{{ route('content.pdf', [$course->slug, $file->id]) }}"
                                    class="q-lesson-title">{{ $file->file_title ?? 'PDF Course Book' }}</a>
                                 <a href="{{ route('content.pdf', [$course->slug, $file->id]) }}"
-                                   class="q-lesson-play">📄 Open</a>
+                                   class="q-lesson-play">Open</a>
                             </li>
                         @else
                             <li class="q-pdf-item">
-                                <span aria-hidden="true">📄</span>
+                                <span aria-hidden="true" style="font-size:.75rem;color:var(--q-muted)">[PDF]</span>
                                 <span class="q-lesson-title">{{ $file->file_title ?? 'PDF Course Book' }}</span>
-                                <span class="q-lesson-lock">🔒 Subscribe to unlock</span>
+                                <span class="q-lesson-lock">Subscribe to unlock</span>
                             </li>
                         @endif
                     @endforeach

@@ -85,7 +85,7 @@
             .q-navbar { padding: 0 1rem; gap: .5rem; }
             .q-navbar-sub  { display: none; }
             .q-navbar-name { font-size: .875rem; white-space: nowrap; }
-            .q-navbar-actions { gap: 4px; }
+            .q-navbar-actions { display: none; }
         }
         @media (max-width: 400px) {
             .q-navbar-name { display: none; }
@@ -127,18 +127,41 @@
             box-shadow: 0 4px 12px rgba(0,0,0,.06);
         }
         .q-mobile-menu.open { display: block; }
-        .q-mobile-menu a {
+        .q-mobile-menu a,
+        .q-mobile-menu button {
             display: block;
+            width: 100%;
             padding: .75rem 1.5rem;
             color: var(--q-ink-2);
             font-size: .9rem;
             text-decoration: none;
+            text-align: right;
             border-top: 1px solid var(--q-border);
+            background: none;
+            border-left: none;
+            border-right: none;
+            border-bottom: none;
+            cursor: pointer;
+            font-family: inherit;
         }
         .q-mobile-menu a:hover,
+        .q-mobile-menu button:hover,
         .q-mobile-menu a.active {
             color: var(--q-green);
             background: color-mix(in srgb, var(--q-green) 5%, transparent);
+        }
+        .q-mobile-menu .q-mob-divider {
+            height: 1px;
+            background: var(--q-border);
+            margin: .25rem 0;
+        }
+        .q-mobile-menu .q-mob-auth-label {
+            padding: .5rem 1.5rem .25rem;
+            font-size: .7rem;
+            color: var(--q-muted);
+            text-align: right;
+            letter-spacing: .06em;
+            text-transform: uppercase;
         }
         @media (min-width: 640px) {
             .q-mobile-menu { display: none !important; }
@@ -211,6 +234,20 @@
         <a href="{{ route('courses.index') }}"    class="{{ request()->routeIs('courses.*')    ? 'active' : '' }}">Courses</a>
         <a href="{{ route('live-classes') }}"     class="{{ request()->routeIs('live-classes') ? 'active' : '' }}">Live Classes</a>
         <a href="{{ route('pricing') }}"          class="{{ request()->routeIs('pricing')      ? 'active' : '' }}">Pricing</a>
+        <div class="q-mob-divider"></div>
+        @auth
+            @if (auth()->user()->role !== 'admin')
+                <a href="{{ route('notifications.index') }}">Alerts</a>
+            @endif
+            <a href="{{ auth()->user()->role === 'admin' ? route('admin.dashboard') : route('dashboard') }}">Dashboard</a>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit">Sign Out</button>
+            </form>
+        @else
+            <a href="{{ route('login') }}"    class="{{ request()->routeIs('login')    ? 'active' : '' }}">Sign In</a>
+            <a href="{{ route('register') }}" class="{{ request()->routeIs('register') ? 'active' : '' }}">Register</a>
+        @endauth
     </div>
 
     {{-- ── Flash messages ── --}}

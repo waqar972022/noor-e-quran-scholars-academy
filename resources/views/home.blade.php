@@ -168,9 +168,14 @@
         grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
         gap: 1.5rem;
     }
-    .q-card.q-course-card { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+    .q-card.q-course-card {
+        padding: 0; overflow: hidden; display: flex; flex-direction: column;
+        text-decoration: none; color: inherit;
+        transition: box-shadow .2s, transform .18s;
+    }
+    .q-card.q-course-card:hover { box-shadow: var(--q-shadow-card); transform: translateY(-2px); }
     .q-course-thumb {
-        height: 90px;
+        height: 220px;
         border-radius: var(--q-radius-lg) var(--q-radius-lg) 0 0;
         display: flex;
         align-items: center;
@@ -180,30 +185,35 @@
         color: color-mix(in srgb, var(--q-green) 20%, transparent);
         direction: rtl;
     }
+    .q-course-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; display: block; }
     .q-course-thumb--quran  { background: color-mix(in srgb, var(--q-green) 20%, transparent); }
     .q-course-thumb--fiqh   { background: var(--q-parch-3); }
     .q-course-thumb--arabic { background: color-mix(in srgb, var(--q-green) 15%, transparent); }
     .q-course-thumb--seerah { background: var(--q-parch-4); }
-    .q-course-body { padding: 1rem 1.1rem 1.2rem; flex: 1; display: flex; flex-direction: column; }
+    .q-course-body { padding: 1rem 1.15rem 1.25rem; flex: 1; display: flex; flex-direction: column; }
     .q-course-title {
         font-family: var(--q-font-prose);
         font-size: .95rem;
         color: var(--q-ink);
-        margin: .5rem 0 .25rem;
+        margin: .5rem 0 .3rem;
         line-height: 1.45;
     }
     .q-course-instructor {
-        font-size: .78rem;
+        font-size: .82rem;
         color: var(--q-muted);
+        line-height: 1.65;
         margin-bottom: .85rem;
-        line-height: 1.55;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
     .q-course-footer {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-top: auto;
-        padding-top: .75rem;
+        padding-top: .8rem;
         border-top: 1px solid var(--q-border);
     }
 
@@ -548,17 +558,16 @@
                     $thumbClasses = ['q-course-thumb--quran','q-course-thumb--fiqh','q-course-thumb--arabic','q-course-thumb--seerah'];
                     $tc = $thumbClasses[$loop->index % 4];
                 @endphp
-                <article class="q-card q-course-card q-reveal" data-delay="{{ ($loop->index % 4) + 1 }}">
-                    @if ($course->thumbnail)
-                        <img style="height:90px;width:100%;object-fit:cover;border-radius:var(--q-radius-lg) var(--q-radius-lg) 0 0"
-                             src="{{ asset($course->thumbnail) }}"
-                             alt="{{ $course->title }}"
-                             loading="lazy">
-                    @else
-                        <div class="q-course-thumb {{ $tc }}" aria-hidden="true">
+                <a href="{{ route('courses.show', $course->slug) }}" class="q-card q-course-card q-reveal" data-delay="{{ ($loop->index % 4) + 1 }}">
+                    <div class="q-course-thumb {{ $tc }}">
+                        @if ($course->thumbnail)
+                            <img src="{{ asset($course->thumbnail) }}"
+                                 alt="{{ $course->title }}"
+                                 loading="lazy">
+                        @else
                             {{ mb_substr($course->title, 0, 1) }}
-                        </div>
-                    @endif
+                        @endif
+                    </div>
                     <div class="q-course-body">
                         @if ($course->category)
                             <span class="q-badge q-badge-green">{{ $course->category->name }}</span>
@@ -573,17 +582,21 @@
                                     <span style="font-size:.75rem;color:var(--q-muted)">▶ {{ $course->videos_count }} {{ Str::plural('lesson', $course->videos_count) }}</span>
                                 @endif
                                 @if ($course->files_count > 0)
-                                    <span style="font-size:.75rem;color:var(--q-muted)">📄 {{ $course->files_count }} {{ Str::plural('file', $course->files_count) }}</span>
+                                    <span style="font-size:.75rem;color:var(--q-muted)">[PDF] {{ $course->files_count }} {{ Str::plural('file', $course->files_count) }}</span>
                                 @endif
                             </div>
                         @endif
                         <div class="q-course-footer">
-                            <span class="q-badge q-badge-gold">Premium</span>
-                            <a href="{{ route('courses.show', $course->slug) }}"
-                               class="q-btn q-btn-primary q-btn-sm">Enroll</a>
+                            @if ($course->is_free)
+                                <span class="q-badge" style="background:color-mix(in srgb,var(--q-green) 15%,transparent);color:var(--q-green);border:1px solid color-mix(in srgb,var(--q-green) 30%,transparent)">Free</span>
+                                <span class="q-btn q-btn-primary q-btn-sm">Start Free</span>
+                            @else
+                                <span class="q-badge q-badge-gold">Premium</span>
+                                <span class="q-btn q-btn-primary q-btn-sm">Enroll</span>
+                            @endif
                         </div>
                     </div>
-                </article>
+                </a>
             @empty
                 <p class="q-text-muted" style="grid-column:1/-1;text-align:center;padding:2rem 0">
                     Courses coming soon — check back shortly.

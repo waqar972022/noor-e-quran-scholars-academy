@@ -54,7 +54,7 @@
     transform: translateY(-2px);
 }
 .q-crd-thumb {
-    height: 160px;
+    height: 220px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -62,7 +62,7 @@
     font-size: 3rem;
     color: color-mix(in srgb, var(--q-green) 20%, transparent);
 }
-.q-crd-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.q-crd-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; display: block; }
 .q-crd-thumb.c0 { background: color-mix(in srgb, var(--q-green) 20%, transparent); }
 .q-crd-thumb.c1 { background: var(--q-parch-3); }
 .q-crd-thumb.c2 { background: color-mix(in srgb, var(--q-green) 15%, transparent); }
