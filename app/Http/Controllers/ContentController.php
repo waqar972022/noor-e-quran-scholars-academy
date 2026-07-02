@@ -22,7 +22,10 @@ class ContentController extends Controller
 
         abort_if($video->course_id !== $course->id, 404);
 
-        if (! $course->is_free && ! $request->user()->hasActiveSubscription()) {
+        $firstVideoId = $course->videos()->orderBy('video_order')->value('id');
+        $isFirstVideo = $video->id === $firstVideoId;
+
+        if (! $course->is_free && ! $isFirstVideo && ! $request->user()->hasActiveSubscription()) {
             return redirect()->route('pricing')
                 ->with('warning', 'An active subscription is required to access course content.');
         }
@@ -83,6 +86,21 @@ class ContentController extends Controller
             'Content-Disposition' => 'inline',
             'Cache-Control'       => 'private, no-store',
         ]);
+    }
+
+    public function pdfDownload(Request $request, string $slug, CourseFile $file): StreamedResponse
+    {
+        $course = Course::where('slug', $slug)
+            ->where('status', 'published')
+            ->firstOrFail();
+
+        abort_if($file->course_id !== $course->id, 404);
+
+        abort_unless($course->is_free, 403);
+
+        abort_unless(Storage::disk('public')->exists($file->file_path), 404);
+
+        return Storage::disk('public')->download($file->file_path, $file->file_title . '.pdf');
     }
 
     public function markComplete(Request $request, string $slug, CourseVideo $video): RedirectResponse

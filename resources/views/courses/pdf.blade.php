@@ -49,9 +49,7 @@
 <div class="q-pdf-wrap">
 
     <nav style="display:flex;align-items:center;gap:.4rem;font-size:.8rem;color:var(--q-muted);flex-wrap:wrap">
-        <a href="{{ route('courses.index') }}" style="color:var(--q-green)">Courses</a>
-        <span>/</span>
-        <a href="{{ route('courses.show', $course->slug) }}" style="color:var(--q-green)">{{ $course->title }}</a>
+        <a href="{{ route('books.index') }}" style="color:var(--q-green)">Books</a>
         <span>/</span>
         <span>{{ $file->file_title }}</span>
     </nav>
@@ -66,6 +64,11 @@
             Page <span id="pdf-page-num">–</span> of <span id="pdf-page-count">–</span>
         </span>
         <button id="pdf-next" class="q-btn q-btn-ghost q-btn-sm" disabled>Next →</button>
+        @if ($course->is_free)
+            <a href="{{ route('content.pdf.download', [$course->slug, $file]) }}" class="q-btn q-btn-outline q-btn-sm">
+                ⬇ Download PDF
+            </a>
+        @endif
     </div>
 
     <div class="q-pdf-canvas-wrap">
@@ -73,11 +76,15 @@
         <canvas id="pdf-canvas"></canvas>
     </div>
 
-    <p style="font-size:.78rem;color:var(--q-muted)">View-only. This document cannot be downloaded.</p>
+    @if ($course->is_free)
+        <p style="font-size:.78rem;color:var(--q-muted)">This document is free to view and download.</p>
+    @else
+        <p style="font-size:.78rem;color:var(--q-muted)">View-only. This document cannot be downloaded.</p>
+    @endif
 
     <div>
-        <a href="{{ route('courses.show', $course->slug) }}" class="q-btn q-btn-outline q-btn-sm">
-            ← Back to Course
+        <a href="{{ route('books.index') }}" class="q-btn q-btn-outline q-btn-sm">
+            ← Back to Books
         </a>
     </div>
 

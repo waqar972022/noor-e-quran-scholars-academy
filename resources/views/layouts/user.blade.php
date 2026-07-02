@@ -11,23 +11,25 @@
     @endif
 
     <style>
-    .q-user-topbar-brand {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        min-width: 0;
-        flex-shrink: 1;
-    }
     .q-user-topbar-right {
         flex-shrink: 0;
         display: flex;
         align-items: center;
         gap: .75rem;
+        margin-left: auto;
     }
     @media (max-width: 400px) {
         .q-user-topbar-name { display: none; }
         .q-user-topbar-right { gap: .4rem; }
     }
+    .q-user-content-home-link {
+        display: inline-block;
+        font-size: .82rem;
+        color: var(--q-muted);
+        text-decoration: none;
+        margin-bottom: .85rem;
+    }
+    .q-user-content-home-link:hover { color: var(--q-green); }
     </style>
 
     @stack('styles')
@@ -43,9 +45,9 @@
     <div class="q-user-main">
 
         <header class="q-user-topbar">
-            <a href="{{ url('/') }}" class="q-user-topbar-brand">
-                ← Home
-            </a>
+            <button class="q-user-hamburger" id="q-user-hamburger" aria-label="Open menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
             <div class="q-user-topbar-right">
                 <span class="q-user-topbar-name">{{ auth()->user()->name }}</span>
                 <form method="POST" action="{{ route('logout') }}" style="display:inline">
@@ -56,6 +58,8 @@
         </header>
 
         <div class="q-user-content">
+
+            <a href="{{ url('/') }}" class="q-user-content-home-link">← Home</a>
 
             @if (session()->hasAny(['success', 'warning', 'error', 'info']))
                 @php
@@ -91,6 +95,17 @@
 
 </div>
 
+<script>
+(function () {
+    var btn  = document.getElementById('q-user-hamburger');
+    var menu = document.getElementById('q-user-nav');
+    if (!btn || !menu) return;
+    btn.addEventListener('click', function () {
+        var isOpen = menu.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+})();
+</script>
 @stack('scripts')
 </body>
 </html>

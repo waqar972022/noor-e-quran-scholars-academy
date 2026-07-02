@@ -35,4 +35,20 @@ class CourseVideo extends Model
     {
         return $this->hasMany(UserLessonProgress::class);
     }
+
+    public static function groupedByCategory()
+    {
+        $videos = static::with(['course.category'])
+            ->whereHas('course', fn ($q) => $q->where('status', 'published'))
+            ->orderBy('video_order')
+            ->get();
+
+        $firstIdByCourse = $videos->groupBy('course_id')->map(fn ($g) => $g->first()->id);
+
+        $videos->each(function ($video) use ($firstIdByCourse) {
+            $video->is_free_preview = $video->course->is_free || $firstIdByCourse[$video->course_id] === $video->id;
+        });
+
+        return $videos->groupBy(fn ($v) => $v->course->category?->name ?? 'General');
+    }
 }

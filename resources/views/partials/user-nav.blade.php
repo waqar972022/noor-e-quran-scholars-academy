@@ -4,7 +4,8 @@
         <div class="q-user-name">{{ auth()->user()->name }}</div>
         <div class="q-user-email">{{ auth()->user()->email }}</div>
     </div>
-    <nav class="q-user-nav" aria-label="User navigation">
+
+    <nav class="q-user-nav" id="q-user-nav" aria-label="User navigation">
         <a href="{{ route('dashboard') }}"
            class="q-user-nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
             Dashboard

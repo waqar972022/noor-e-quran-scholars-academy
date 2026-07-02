@@ -12,6 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Welcome') — {{ setting('site_name', config('app.name')) }}</title>
+    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
 
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -47,18 +48,10 @@
             gap: 10px;
             text-decoration: none;
         }
-        .q-navbar-mark {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            background: var(--q-green);
-            display: grid;
-            place-items: center;
-            font-family: var(--q-font-serif);
-            font-size: 18px;
-            color: var(--q-parch);
-            font-weight: 700;
+        .q-navbar-icon {
+            display: flex;
             flex-shrink: 0;
+            color: var(--q-gold);
         }
         .q-navbar-name {
             font-family: var(--q-font-serif);
@@ -236,16 +229,18 @@
     {{-- ── Sticky Navbar ── --}}
     <nav class="q-navbar" role="navigation" aria-label="Main navigation">
         <a class="q-navbar-brand" href="{{ url('/') }}">
-            <div class="q-navbar-mark">ن</div>
+            <span class="q-navbar-icon" aria-hidden="true">@include('partials.logo-icon')</span>
+            @php $siteNameParts = site_name_parts(); @endphp
             <div>
-                <span class="q-navbar-name">{{ setting('site_name', config('app.name')) }}</span>
-                <span class="q-navbar-sub">Islamic Learning Platform</span>
+                <span class="q-navbar-name">{{ $siteNameParts[0] }}</span>
+                <span class="q-navbar-sub">{{ $siteNameParts[1] ?? '' }}</span>
             </div>
         </a>
 
         <ul class="q-navbar-links">
             <li><a href="{{ url('/') }}">Home</a></li>
-            <li><a href="{{ route('courses.index') }}">Courses</a></li>
+            <li><a href="{{ route('videos.index') }}">Videos</a></li>
+            <li><a href="{{ route('books.index') }}">Books</a></li>
             <li><a href="{{ route('live-classes') }}">Live Classes</a></li>
             <li><a href="{{ route('pricing') }}">Pricing</a></li>
         </ul>

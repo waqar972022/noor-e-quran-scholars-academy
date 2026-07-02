@@ -15,3 +15,10 @@ if (! function_exists('pkr')) {
         return 'PKR '.number_format((float) $amount, 0);
     }
 }
+
+if (! function_exists('site_name_parts')) {
+    function site_name_parts(): array
+    {
+        return explode(' ', setting('site_name', config('app.name')), 2);
+    }
+}

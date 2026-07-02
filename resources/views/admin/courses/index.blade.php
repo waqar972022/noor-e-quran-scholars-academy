@@ -6,7 +6,6 @@
 
 <div class="q-page-header">
     <div>
-        <h2 class="q-page-heading">Courses</h2>
         <p class="q-page-sub">{{ $courses->total() }} total</p>
     </div>
     <a href="{{ route('admin.courses.create') }}" class="q-btn q-btn-primary q-btn-sm">+ New Course</a>
@@ -28,7 +27,7 @@
         <table class="q-table">
             <thead>
                 <tr>
-                    <th style="width:52px"></th>
+                    <th style="width:76px;min-width:76px"></th>
                     <th>Title</th>
                     <th>Category</th>
                     <th>Status</th>
@@ -42,7 +41,7 @@
                         <td>
                             @if ($course->thumbnail)
                                 <img src="{{ asset($course->thumbnail) }}"
-                                     alt="" class="q-thumb-sm">
+                                     alt="" width="44" height="36" class="q-thumb-sm">
                             @else
                                 <span class="q-thumb-placeholder">—</span>
                             @endif

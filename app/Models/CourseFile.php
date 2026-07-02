@@ -27,4 +27,12 @@ class CourseFile extends Model
     {
         return $this->belongsTo(Course::class);
     }
+
+    public static function groupedByCategory()
+    {
+        return static::with(['course.category'])
+            ->whereHas('course', fn ($q) => $q->where('status', 'published'))
+            ->get()
+            ->groupBy(fn ($f) => $f->course->category?->name ?? 'General');
+    }
 }

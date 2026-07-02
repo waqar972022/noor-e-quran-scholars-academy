@@ -6,7 +6,6 @@
 
 <div class="q-page-header">
     <div>
-        <h2 class="q-page-heading">Edit Category</h2>
         <p class="q-page-sub">{{ $category->courses_count ?? $category->courses()->count() }} courses in this category</p>
     </div>
     <a href="{{ route('admin.categories.index') }}" class="q-btn q-btn-ghost q-btn-sm">← Back</a>

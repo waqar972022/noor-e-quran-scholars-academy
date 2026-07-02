@@ -82,7 +82,7 @@
 
 <div style="max-width:1100px;margin:0 auto;padding:1rem 1.5rem .25rem">
     <nav style="display:flex;align-items:center;gap:.4rem;font-size:.8rem;color:var(--q-muted)">
-        <a href="{{ route('courses.index') }}" style="color:var(--q-green)">Courses</a>
+        <a href="{{ route('videos.index') }}" style="color:var(--q-green)">Videos</a>
         <span>/</span>
         <a href="{{ route('courses.show', $course->slug) }}" style="color:var(--q-green)">{{ $course->title }}</a>
         <span>/</span>

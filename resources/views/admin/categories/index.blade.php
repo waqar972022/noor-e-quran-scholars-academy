@@ -6,7 +6,6 @@
 
 <div class="q-page-header">
     <div>
-        <h2 class="q-page-heading">Categories</h2>
         <p class="q-page-sub">{{ $categories->total() }} total</p>
     </div>
     <a href="{{ route('admin.categories.create') }}" class="q-btn q-btn-primary q-btn-sm">

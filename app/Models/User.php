@@ -73,6 +73,10 @@ class User extends Authenticatable
 
     public function hasActiveSubscription(): bool
     {
+        if ($this->role === 'admin') {
+            return true;
+        }
+
         return $this->subscriptions()
             ->where('status', 'active')
             ->where('end_date', '>=', now()->toDateString())

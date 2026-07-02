@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\PaymentController as AdminPaymentController;
 use App\Http\Controllers\Admin\SettingController as AdminSettingController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BooksController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\CourseController;
@@ -15,10 +16,12 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PricingController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\VideosController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
-Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
+Route::get('/videos', VideosController::class)->name('videos.index');
+Route::get('/books', BooksController::class)->name('books.index');
 Route::get('/courses/{slug}', [CourseController::class, 'show'])->name('courses.show');
 Route::get('/pricing', PricingController::class)->name('pricing');
 Route::view('/live-classes', 'live-classes')->name('live-classes');
@@ -59,6 +62,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/courses/{slug}/videos/{video}',          [ContentController::class, 'video'])->name('content.video');
     Route::get('/courses/{slug}/files/{file}',            [ContentController::class, 'pdf'])->name('content.pdf');
     Route::get('/courses/{slug}/files/{file}/stream',     [ContentController::class, 'pdfStream'])->name('content.pdf.stream');
+    Route::get('/courses/{slug}/files/{file}/download',   [ContentController::class, 'pdfDownload'])->name('content.pdf.download');
     Route::post('/courses/{slug}/videos/{video}/complete',[ContentController::class, 'markComplete'])->name('content.video.complete');
 
 

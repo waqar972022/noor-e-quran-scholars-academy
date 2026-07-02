@@ -22,7 +22,7 @@
 }
 .q-course-hero-thumb {
     width: 100%;
-    aspect-ratio: 4/3;
+    aspect-ratio: 16/9;
     border-radius: var(--q-radius-lg);
     overflow: hidden;
     border: 1.5px solid var(--q-border);
@@ -34,7 +34,7 @@
     font-size: 5rem;
     color: color-mix(in srgb, var(--q-green) 18%, transparent);
 }
-.q-course-hero-thumb img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.q-course-hero-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .q-course-hero-meta { display: flex; flex-direction: column; gap: .6rem; }
 .q-course-hero-title {
     font-family: var(--q-font-serif);
@@ -88,14 +88,12 @@
 .q-lesson-title { flex: 1; }
 .q-lesson-lock { font-size: .75rem; color: var(--q-muted); white-space: nowrap; opacity: .7; }
 .q-lesson-item.unlocked { border-color: color-mix(in srgb, var(--q-green) 20%, transparent); }
-.q-lesson-item.unlocked a.q-lesson-title,
-.q-pdf-item.unlocked a.q-lesson-title {
+.q-lesson-item.unlocked a.q-lesson-title {
     color: var(--q-ink);
     font-weight: 500;
     text-decoration: none;
 }
-.q-lesson-item.unlocked a.q-lesson-title:hover,
-.q-pdf-item.unlocked a.q-lesson-title:hover { color: var(--q-green); }
+.q-lesson-item.unlocked a.q-lesson-title:hover { color: var(--q-green); }
 .q-lesson-play { font-size: .75rem; color: var(--q-green); font-weight: 600; white-space: nowrap; }
 .q-access-panel {
     border-radius: var(--q-radius-lg);
@@ -103,18 +101,6 @@
     border-top: 3px solid var(--q-green);
     padding: 1.1rem 1.25rem;
     background: var(--q-parch-2);
-}
-
-.q-pdf-item {
-    display: flex;
-    align-items: center;
-    gap: .85rem;
-    padding: .75rem 1rem;
-    border-radius: var(--q-radius);
-    background: color-mix(in srgb, var(--q-gold) 8%, transparent);
-    border: 1.5px solid var(--q-border);
-    font-size: .88rem;
-    color: var(--q-ink-2);
 }
 
 .q-course-sidebar { display: flex; flex-direction: column; gap: 1.25rem; }
@@ -171,8 +157,10 @@
 
 @section('content')
 
+@php $hasVideos = $course->videos->isNotEmpty(); @endphp
+
 <nav class="q-breadcrumb" aria-label="Breadcrumb">
-    <a href="{{ route('courses.index') }}">Courses</a>
+    <a href="{{ $hasVideos ? route('videos.index') : route('books.index') }}">{{ $hasVideos ? 'Videos' : 'Books' }}</a>
     <span aria-hidden="true">/</span>
     <span>{{ $course->title }}</span>
 </nav>
@@ -180,9 +168,18 @@
 <div class="q-course-hero">
     <div class="q-course-hero-inner">
 
+        @php
+            $firstVideo = $course->videos->first();
+            $heroThumb = null;
+            if ($firstVideo) {
+                preg_match('/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/', $firstVideo->youtube_url ?? '', $ytm);
+                if (!empty($ytm[1])) $heroThumb = 'https://img.youtube.com/vi/' . $ytm[1] . '/hqdefault.jpg';
+            }
+            if (!$heroThumb && $course->thumbnail) $heroThumb = asset($course->thumbnail);
+        @endphp
         <div class="q-course-hero-thumb">
-            @if ($course->thumbnail)
-                <img src="{{ asset($course->thumbnail) }}" alt="{{ $course->title }}">
+            @if ($heroThumb)
+                <img src="{{ $heroThumb }}" alt="{{ $course->title }}">
             @else
                 {{ mb_substr($course->title, 0, 1) }}
             @endif
@@ -209,9 +206,8 @@
             <div class="q-meta-row" style="margin-top:.5rem;font-size:.82rem;color:var(--q-muted)">
                 @if ($course->videos->isNotEmpty())
                     <span>{{ $course->videos->count() }} video lessons</span>
-                @endif
-                @if ($course->files->isNotEmpty())
-                    <span>&middot; PDF course book included</span>
+                @elseif ($course->files->isNotEmpty())
+                    <span>{{ $course->files->count() }} {{ Str::plural('book', $course->files->count()) }}</span>
                 @endif
             </div>
         </div>
@@ -232,14 +228,19 @@
             </div>
         @endif
 
-        @if ($course->videos->isNotEmpty() || $course->files->isNotEmpty())
+        @if ($course->videos->isNotEmpty())
             <div class="q-panel">
                 <div class="q-panel-title">Lessons</div>
 
+                @php $firstVideoId = $course->videos->first()?->id; @endphp
                 <ul class="q-lesson-list">
                     @foreach ($course->videos as $video)
-                        @php $done = $isSubscribed && in_array($video->id, $completedVideoIds); @endphp
-                        @if ($isSubscribed)
+                        @php
+                            $isFirstFree = $video->id === $firstVideoId;
+                            $canWatch = $isSubscribed || $isFirstFree;
+                            $done = $isSubscribed && in_array($video->id, $completedVideoIds);
+                        @endphp
+                        @if ($canWatch)
                             <li class="q-lesson-item unlocked"
                                 style="{{ $done ? 'border-color:color-mix(in srgb, var(--q-green) 25%, transparent);background:color-mix(in srgb, var(--q-green) 6%, transparent)' : '' }}">
                                 <span class="q-lesson-num" style="{{ $done ? 'color:var(--q-green)' : '' }}">
@@ -249,7 +250,12 @@
                                 <a href="{{ route('content.video', [$course->slug, $video->id]) }}"
                                    class="q-lesson-title">{{ $video->video_title }}</a>
                                 <a href="{{ route('content.video', [$course->slug, $video->id]) }}"
-                                   class="q-lesson-play">{{ $done ? 'Done' : '&#x25B6; Play' }}</a>
+                                   class="q-lesson-play">
+                                    {!! $done ? 'Done' : '&#x25B6; Play' !!}
+                                    @if ($isFirstFree && !$isSubscribed)
+                                        <span style="font-size:.65rem;color:var(--q-gold);margin-left:.25rem">Free</span>
+                                    @endif
+                                </a>
                             </li>
                         @else
                             <li class="q-lesson-item">
@@ -260,20 +266,29 @@
                             </li>
                         @endif
                     @endforeach
+                </ul>
 
+            </div>
+        @elseif ($course->files->isNotEmpty())
+            <div class="q-panel">
+                <div class="q-panel-title">Course Books</div>
+
+                <ul class="q-lesson-list">
                     @foreach ($course->files as $file)
                         @if ($isSubscribed)
-                            <li class="q-pdf-item unlocked">
-                                <span aria-hidden="true" style="font-size:.75rem;color:var(--q-muted)">[PDF]</span>
+                            <li class="q-lesson-item unlocked">
+                                <span class="q-lesson-num">{{ $loop->iteration }}</span>
+                                <span aria-hidden="true">&#x1F4D6;</span>
                                 <a href="{{ route('content.pdf', [$course->slug, $file->id]) }}"
-                                   class="q-lesson-title">{{ $file->file_title ?? 'PDF Course Book' }}</a>
+                                   class="q-lesson-title">{{ $file->file_title ?? $course->title }}</a>
                                 <a href="{{ route('content.pdf', [$course->slug, $file->id]) }}"
                                    class="q-lesson-play">Open</a>
                             </li>
                         @else
-                            <li class="q-pdf-item">
-                                <span aria-hidden="true" style="font-size:.75rem;color:var(--q-muted)">[PDF]</span>
-                                <span class="q-lesson-title">{{ $file->file_title ?? 'PDF Course Book' }}</span>
+                            <li class="q-lesson-item">
+                                <span class="q-lesson-num">{{ $loop->iteration }}</span>
+                                <span aria-hidden="true">&#x1F4D6;</span>
+                                <span class="q-lesson-title">{{ $file->file_title ?? $course->title }}</span>
                                 <span class="q-lesson-lock">Subscribe to unlock</span>
                             </li>
                         @endif
@@ -295,11 +310,10 @@
                         <span class="q-included-check" aria-hidden="true">✓</span>
                         {{ $course->videos->count() }} video lessons
                     </li>
-                @endif
-                @if ($course->files->isNotEmpty())
+                @elseif ($course->files->isNotEmpty())
                     <li class="q-included-item">
                         <span class="q-included-check" aria-hidden="true">✓</span>
-                        PDF course book
+                        {{ $course->files->count() }} {{ Str::plural('book', $course->files->count()) }}
                     </li>
                 @endif
                 <li class="q-included-item">

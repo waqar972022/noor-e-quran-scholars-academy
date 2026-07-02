@@ -4,7 +4,7 @@
         {{-- Col 1: Brand --}}
         <div class="q-footer-col">
             <div class="q-footer-brand">
-                <div class="q-footer-mark">ن</div>
+                <div class="q-footer-mark" style="background:transparent;color:var(--q-gold)">@include('partials.logo-icon', ['size' => 26])</div>
                 <span class="q-footer-name">{{ setting('site_name', config('app.name')) }}</span>
             </div>
             <p class="q-footer-tagline">
@@ -17,7 +17,8 @@
         <div class="q-footer-col">
             <h4 class="q-footer-heading">Learn</h4>
             <ul class="q-footer-links">
-                <li><a href="{{ route('courses.index') }}">All Courses</a></li>
+                <li><a href="{{ route('videos.index') }}">Videos</a></li>
+                <li><a href="{{ route('books.index') }}">Books</a></li>
                 <li><a href="{{ route('live-classes') }}">Live 1-on-1 Classes</a></li>
                 <li><a href="{{ route('pricing') }}">Pricing &amp; Plans</a></li>
             </ul>

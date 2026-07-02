@@ -37,7 +37,13 @@ class DashboardController extends Controller
             ->latest()
             ->get();
 
-        return view('user.learning', compact('isSubscribed', 'courses'));
+        $completedByCourse = $user->lessonProgress()
+            ->join('course_videos', 'course_videos.id', '=', 'user_lesson_progress.course_video_id')
+            ->selectRaw('course_videos.course_id, count(*) as completed')
+            ->groupBy('course_videos.course_id')
+            ->pluck('completed', 'course_id');
+
+        return view('user.learning', compact('isSubscribed', 'courses', 'completedByCourse'));
     }
 
     public function subscription(): View

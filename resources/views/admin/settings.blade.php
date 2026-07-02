@@ -6,7 +6,6 @@
 
 <div class="q-page-header">
     <div>
-        <h2 class="q-page-heading">Settings</h2>
         <p class="q-page-sub">Platform configuration — changes take effect immediately.</p>
     </div>
 </div>

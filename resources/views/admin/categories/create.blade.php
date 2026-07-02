@@ -5,9 +5,6 @@
 @section('content')
 
 <div class="q-page-header">
-    <div>
-        <h2 class="q-page-heading">New Category</h2>
-    </div>
     <a href="{{ route('admin.categories.index') }}" class="q-btn q-btn-ghost q-btn-sm">← Back</a>
 </div>
 

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Admin') — {{ setting('site_name', config('app.name')) }}</title>
+    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
 
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -36,11 +37,14 @@
 
     {{-- ── Sidebar ── --}}
     <aside class="q-admin-sidebar">
-        <a class="q-admin-brand" href="{{ route('admin.dashboard') }}">
-            <div class="q-navbar-mark" style="width:30px;height:30px;font-size:15px;">ن</div>
-            Admin Panel
-        </a>
+        <div class="q-admin-brand-row">
+            <a class="q-admin-brand" href="{{ route('admin.dashboard') }}">
+                <span style="display:flex;flex-shrink:0;color:var(--q-gold)" aria-hidden="true">@include('partials.logo-icon', ['size' => 22])</span>
+                Admin Panel
+            </a>
+        </div>
 
+        <div class="q-admin-collapsible" id="q-admin-collapsible">
         <nav class="q-admin-nav">
             <span class="q-admin-nav-section">Overview</span>
             <a href="{{ route('admin.dashboard') }}"
@@ -85,16 +89,21 @@
         </nav>
 
         <div class="q-admin-sidebar-foot">
+            <a href="{{ url('/') }}" style="display:block;font-size:.8rem;color:var(--q-muted);text-decoration:none;margin-bottom:.5rem;padding:.4rem 0">← View Site</a>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit" class="q-admin-logout">Sign Out</button>
             </form>
+        </div>
         </div>
     </aside>
 
     {{-- ── Main ── --}}
     <div class="q-admin-main">
         <header class="q-admin-topbar">
+            <button class="q-admin-hamburger" id="q-admin-hamburger" aria-label="Open admin menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
             <span class="q-admin-topbar-title">@yield('title', 'Dashboard')</span>
             <div class="q-admin-user">
                 <span>{{ auth()->user()->name }}</span>
@@ -116,6 +125,17 @@
 
 </div>
 
+<script>
+(function () {
+    var btn  = document.getElementById('q-admin-hamburger');
+    var menu = document.getElementById('q-admin-collapsible');
+    if (!btn || !menu) return;
+    btn.addEventListener('click', function () {
+        var isOpen = menu.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+})();
+</script>
 @stack('scripts')
 </body>
 </html>

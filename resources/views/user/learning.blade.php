@@ -51,6 +51,22 @@
                                 </div>
                             @endif
 
+                            @php
+                                $totalVideos = $course->videos->count();
+                                $completed   = $completedByCourse[$course->id] ?? 0;
+                            @endphp
+                            @if (($isSubscribed || $course->is_free) && $totalVideos > 0)
+                                <div style="margin-top:.5rem">
+                                    <div style="display:flex;justify-content:space-between;font-size:.72rem;color:var(--q-muted);margin-bottom:.3rem">
+                                        <span>Progress</span>
+                                        <span>{{ $completed }} / {{ $totalVideos }} lessons</span>
+                                    </div>
+                                    <div style="height:5px;background:var(--q-parch-3);border-radius:3px;overflow:hidden">
+                                        <div style="height:100%;background:var(--q-green);border-radius:3px;width:{{ round($completed / $totalVideos * 100) }}%"></div>
+                                    </div>
+                                </div>
+                            @endif
+
                             <div class="q-learn-footer">
                                 <div style="display:flex;gap:.5rem;flex-wrap:wrap">
                                     @if ($course->videos->count())

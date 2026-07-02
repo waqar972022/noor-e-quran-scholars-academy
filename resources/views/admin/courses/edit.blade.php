@@ -21,7 +21,6 @@
 
 <div class="q-page-header">
     <div>
-        <h2 class="q-page-heading">Edit Course</h2>
         <p class="q-page-sub">{{ $course->title }}</p>
     </div>
     <a href="{{ route('admin.courses.index') }}" class="q-btn q-btn-ghost q-btn-sm">← Back</a>
